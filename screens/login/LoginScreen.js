@@ -1,42 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-//import * as WebBrowser from 'expo-web-browser';
-//import { FIREBASE_AUTH } from '../../firebase';
- 
+import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+
 //Components
-import RegisterOption from './RegisterOption';
 import LoginOption from './LoginOption';
+import RegisterOption from './RegisterOption';
+
 
 export default function LoginScreen() {
-  const [chooseRegsiter, setChooseRegister] = useState(false);
-  const [user, setUser] = useState(null);
- 
-  function changeToRegister() {
-    setChooseRegister(true);
-  }
+    const [chooseRegister, setChooseRegister] = useState(false);
 
-  function changeToLogin() {
-    setChooseRegister(false);
-  }
+    function changeChoosenScreen() {
+        setChooseRegister(!chooseRegister)
+    }
 
-  function loginGoogle() {
-    promptAsync();
-  }
-
-  return (
-    <View style={styles.container}>
-      <LoginOption/>
-    </View>
-  );
-};
+    return (
+      <View style={styles.container}>
+          {chooseRegister
+            ? <RegisterOption changeToLogin={changeChoosenScreen}/>
+            : <LoginOption changeToSignup={changeChoosenScreen}/>
+          }
+      </View>
+    );
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    position: "relative",
-    alignItems: 'center',
-    justifyContent: "center",
-    backgroundColor: "#222831"
-  },
-})
+    container: {
+        flex: 1,
+        flexDirection: "column",
+        position: "relative",
+        alignItems: 'center',
+        justifyContent: "center",
+        backgroundColor: "#222831"
+    }
+});

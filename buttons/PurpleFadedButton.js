@@ -35,7 +35,7 @@ export default function PurpleFadedButton({ onClick, title, buttonWidth, buttonH
 const styles = StyleSheet.create({
     button: {
         marginTop: 30,
-        marginBottom: 40,
+        marginBottom: 30,
       },
       gradient: {
         flex: 1,

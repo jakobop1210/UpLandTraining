@@ -1,17 +1,18 @@
 import { StyleSheet, Pressable, Text } from 'react-native'
 import React from 'react'
 
-const GotoSignUpButton = () => {
+export default function GotoSignUpButton({ onClick, title }) {
   return (
     <Pressable 
-        style={({ pressed }) => [
-            {
-              opacity: pressed
-                ? 0.5
-                : 1
-            }
-    ]}>
-        <Text style={styles.gotoSignupButtonText}>SIGN UP</Text>
+      onPress={onClick}
+      style={({ pressed }) => [
+        {
+          opacity: pressed
+            ? 0.5
+            : 1
+        }
+      ]}>
+        <Text style={styles.gotoSignupButtonText}>{title}</Text>
     </Pressable>
   )
 }
@@ -23,5 +24,3 @@ const styles = StyleSheet.create({
         marginLeft: 6
     }
 })
-
-export default GotoSignUpButton

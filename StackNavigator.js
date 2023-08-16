@@ -10,7 +10,7 @@ import ProfileScreen from './screens/profile/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
-export default StackNavigator = () => {
+export default function StackNavigator() {
   return (
     <Tab.Navigator
         screenOptions={{
