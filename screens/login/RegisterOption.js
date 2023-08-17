@@ -88,8 +88,8 @@ export default function RegisterOption({ changeToLogin }) {
             </View>
             <View style={styles.registerButtonView}>
               {loading 
-                  ? <ActivityIndicator size="large" color="#EEEEEE" />
-                  : <PurpleFadedButton title="Register Account" onClick={handleRegister} buttonWidth="100%" buttonHeight={50} startGradient={[0, 0]} endGradient={[1, 0]}/>
+                  ? <ActivityIndicator size="large" color="#F0EBD8" />
+                  : <PurpleFadedButton title="Register Account" onClick={handleRegister} buttonWidth="100%" buttonHeight={50} startGradient={[1, 0]} endGradient={[0, 1]}/>
               }
             </View>
             <View style={styles.gotoLoginView}>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         height: "60%",
     },
     registerHeader: {
-        color: "#EEEEEE",
+        color: "#F0EBD8",
         fontSize: 35,
         fontWeight: "300",
         marginBottom: 5

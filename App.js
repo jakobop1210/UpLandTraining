@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
@@ -23,15 +22,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {currentUser ? <StackNavigator /> : <LoginScreen/>}
+        {currentUser ? <StackNavigator /> : <LoginScreen/>}
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

@@ -20,7 +20,7 @@ export default function GotoSignUpButton({ onClick, title }) {
 const styles = StyleSheet.create({
     gotoSignupButtonText: {
         fontSize: 17,
-        color: "#6A5ACD",
+        color: "#748CAB",
         marginLeft: 6
     }
 })

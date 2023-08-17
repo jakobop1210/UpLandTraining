@@ -1,7 +1,7 @@
 import { StyleSheet, View, TextInput, Text } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'; 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { auth } from '../../firebaseAuth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { ActivityIndicator } from 'react-native-paper';
@@ -56,10 +56,15 @@ export default function LoginOption({ changeToSignup }) {
         promtAsync();
     }
 
-    
-
+    useEffect(() => {
+        if (response?.type == "success") {
+            const { id_token } = response.params;
+            const credential = GoogleAuthProvider.credential(id_token);
+            signInWithCredential(auth, credential)
+        }
+    }, [response])
+ 
    
-
     return (
       <View style={styles.loginView}>
           <Text style={styles.loginHeader}>Login to Account</Text>
@@ -100,14 +105,14 @@ export default function LoginOption({ changeToSignup }) {
           </View>
           <View style={styles.loginButtonView}>
             {loading 
-                ? <ActivityIndicator size="large" color="#EEEEEE" />
+                ? <ActivityIndicator size="large" color="#F0EBD8" />
                 : <PurpleFadedButton title="Login" onClick={handleLogin} buttonWidth="100%" buttonHeight={50} startGradient={[0, 0]} endGradient={[1, 0]}/>
             }
           </View>
                 <Text style={styles.dontHaveAccountText}>or Login with</Text>
           <View style={styles.providerLoginView}>
               <PurpleFadedButton title="Google" onClick={signinGoogle} buttonWidth="48.5%" buttonHeight={60} iconImage={GoogleLogo} startGradient={[1, 0]} endGradient={[0, 1]}/>
-              <PurpleFadedButton title="Facebook" buttonWidth="48.5%" buttonHeight={60} iconImage={FacebookLogo} startGradient={[0, 0]} endGradient={[0, 1]}/>
+              <PurpleFadedButton title="Facebook" buttonWidth="48.5%" buttonHeight={60} iconImage={FacebookLogo} startGradient={[0, 1]} endGradient={[1, 0]}/>
           </View>
           <View style={styles.gotoSignupView}>
               <Text style={styles.dontHaveAccountText}>Don't have an account?</Text>
@@ -123,7 +128,7 @@ const styles = StyleSheet.create({
         height: "60%",
     },
     loginHeader: {
-        color: "#EEEEEE",
+        color: "#F0EBD8",
         fontSize: 30,
         fontWeight: "300",
         marginBottom: 5

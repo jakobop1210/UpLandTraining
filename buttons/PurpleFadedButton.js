@@ -18,7 +18,7 @@ export default function PurpleFadedButton({ onClick, title, buttonWidth, buttonH
             } 
           ]}>
             <LinearGradient
-                colors={['#482980' , '#522e92', '#673ab7']}
+                colors={['#3E5C76' , '#3E5C76', '#3E5C76','#3E5C76', '#748CAB']}
                 start={startGradient}
                 end={endGradient}
                 style={{...styles.gradient, height: buttonHeight}}
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
       buttonText: {
-        color: '#EEEEEE',
+        color: '#F0EBD8',
         fontSize: 18,
       },
       iconImage: {

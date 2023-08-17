@@ -15,10 +15,10 @@ export default function StackNavigator() {
     <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarStyle: {backgroundColor: "#FFD369", height: 90},
+          tabBarStyle: {backgroundColor: "#1D2D44", height: 90, borderTopWidth:0},
           tabBarLabelStyle: {fontSize: 12, fontWeight: "bold"},
-          tabBarInactiveTintColor: "#6B6E74",
-          tabBarActiveTintColor: "#222831",
+          tabBarInactiveTintColor: "#748CAB",
+          tabBarActiveTintColor: "#F0EBD8",
         }}>     
         <Tab.Screen name="Home" component={HomeScreen} 
           options={{
