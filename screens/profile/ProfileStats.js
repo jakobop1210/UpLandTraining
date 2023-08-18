@@ -1,15 +1,14 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react'
+import React from 'react';
 
-export default function HomeScreen() {
+export default function ProfileStats() {
   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
-
+ 
     </LinearGradient>
   )
 }
-
 
 const styles = StyleSheet.create({
   container: {

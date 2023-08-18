@@ -10,7 +10,7 @@ import ProfileScreen from './screens/profile/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
-export default function StackNavigator() {
+export default function StackNavigator({ loggedInUser }) {
   return (
     <Tab.Navigator
         screenOptions={{
@@ -20,25 +20,37 @@ export default function StackNavigator() {
           tabBarInactiveTintColor: "#748CAB",
           tabBarActiveTintColor: "#F0EBD8",
         }}>     
-        <Tab.Screen name="Home" component={HomeScreen} 
+        <Tab.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          initialParams={{ loggedInUser }} 
           options={{
             tabBarIcon: ({color}) => (
                 <FontAwesome name="home" color={color} size={26} />
             )
         }}/>
-        <Tab.Screen name="Training" component={TrainingScreen} 
+        <Tab.Screen 
+          name="Training" 
+          component={TrainingScreen} 
+          initialParams={{ loggedInUser }} 
           options={{
             tabBarIcon: ({color}) => (
                 <FontAwesome5 name="dumbbell" color={color} size={26} />
             )
         }}/>
-        <Tab.Screen name="Progress" component={ProgressScreen} 
+        <Tab.Screen 
+          name="Progress" 
+          component={ProgressScreen} 
+          initialParams={{ loggedInUser }} 
           options={{
             tabBarIcon: ({color}) => (
                 <FontAwesome name="line-chart" color={color} size={26} />
             )
         }}/> 
-        <Tab.Screen name="My profile" component={ProfileScreen} 
+        <Tab.Screen 
+        name="My profile" 
+        component={ProfileScreen} 
+        initialParams={{ loggedInUser }} 
           options={{
             tabBarIcon: ({color}) => (
               <FontAwesome name="user" color={color} size={26} />

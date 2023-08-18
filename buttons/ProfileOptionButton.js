@@ -1,8 +1,11 @@
 import { StyleSheet, Text, Pressable, Image, View} from 'react-native';
 import { Ionicons, FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-export default function ProfileOptionButton({ onClick, title, iconname, iconColor, iconViewColor, iconType }) {
+
+export default function ProfileOptionButton({ navigateToScreen, title, iconname, iconColor, iconViewColor, iconType }) {
     let selectedIcon = <Ionicons name={iconname} size={30} color={iconColor} />;
+    const navigation = useNavigation();
 
     if (iconType === 'FontAwesome') {
         selectedIcon = <FontAwesome name={iconname} size={30} color={iconColor} />;
@@ -10,7 +13,7 @@ export default function ProfileOptionButton({ onClick, title, iconname, iconColo
 
     return (
         <Pressable 
-            onPress={onClick}
+            onPress={() => {navigation.navigate(navigateToScreen)}}
             style={({ pressed }) => [
             {
               opacity: pressed
