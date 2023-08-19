@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     userInfoView: {
-      height: "50%",
+      height: "45%",
       width: "100%",
       alignItems: "center",
       justifyContent: "center"
     },
     userOptionsView: {
-      height: "50%",
+      height: "55%",
       width: "100%",
       backgroundColor: "#1D2D44",
       borderTopLeftRadius: 30,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     profileImageView: {
       borderColor: "#748CAB",
       borderWidth: 2,
-      borderRadius: "100%",
+      borderRadius: 100,
       width: 130,
       height: 130,
       justifyContent: "center",
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
       height: 40,
       position: 'absolute',
       backgroundColor: "#748CAB",
-      borderRadius: "100%",
+      borderRadius: 100,
       right: 0,
       bottom: 0,
     },

@@ -16,7 +16,7 @@ export default function goBackButton() {
                 },
                 styles.button
             ]}>
-            <MaterialIcons name="keyboard-arrow-left" size={50} color="#F0EBD8" />
+            <MaterialIcons name="keyboard-arrow-left" size={45} color="#F0EBD8" />
         </Pressable>
     );
 }
@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         position: "absolute",
-        top: 60,
-        left: 10,
+        top: 50,
+        left: 5,
         height: 50,
         width: 60,  
     }
