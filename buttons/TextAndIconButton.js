@@ -1,13 +1,8 @@
 import { StyleSheet, Text, Pressable, Image, View} from 'react-native';
-import { SimpleLineIcons, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
-export default function TransparentButton({ onClick, title, buttonWidth, buttonHeight, iconname, iconType, iconsize, iconColor }) {
-    let selectedIcon = <SimpleLineIcons name={iconname} size={iconsize} color={iconColor} />;
-
-    if (iconType === 'MaterialIcons') {
-        selectedIcon = <MaterialIcons name={iconname} size={iconsize} color={iconColor} />;
-    } 
-
+export default function TextAndIconButton({ onClick, title, iconName, iconSize }) {
+  
     return (
         <Pressable 
             onPress={onClick}
@@ -17,14 +12,11 @@ export default function TransparentButton({ onClick, title, buttonWidth, buttonH
                 ? 0.5
                 : 1
             },
-            styles.button,
-            { width: buttonWidth,
-              height: buttonHeight
-            } 
+            styles.button
           ]}>
             <View style={styles.contentContainer}>
-              {selectedIcon}
-              {title && <Text style={styles.buttonText}>{title}</Text>}
+              <Text style={styles.buttonText}>{title}</Text>
+              <MaterialIcons name={iconName} size={iconSize} color="#F0EBD8" />
             </View>
         </Pressable>
     );
@@ -34,6 +26,9 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: "center",
         alignItems: "center",
+        height: 50,
+        paddingLeft: 20,
+        paddingRight: 20,
       },
       contentContainer: {
         flexDirection: 'row',
@@ -43,6 +38,5 @@ const styles = StyleSheet.create({
       buttonText: {
         color: '#F0EBD8',
         fontSize: 18,
-        marginLeft: 10
       },
 });

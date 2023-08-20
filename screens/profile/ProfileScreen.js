@@ -7,7 +7,8 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../firebaseAuth';
 
 //Components
-import TransparentButton from '../../buttons/TransparentButton';
+import IconButton from '../../buttons/IconButton';
+import TextAndIconButton from '../../buttons/TextAndIconButton';
 import ProfileOptionButton from '../../buttons/ProfileOptionButton';
 
 export default function ProfileOverview() {
@@ -32,7 +33,7 @@ export default function ProfileOverview() {
             <View style={styles.profileImageView}>
             <FontAwesome name="user-o" style={styles.userProfileIcon} />
             <View style={styles.addProfileImageView}>
-                <TransparentButton buttonWidth={40} buttonHeight={40} iconname="add-a-photo" iconType="MaterialIcons" iconsize={25} iconColor="#0D1321"/>
+                <IconButton iconName="add-a-photo" iconType="MaterialIcons" iconSize={25} iconColor="#0D1321"/>
             </View>
             </View>
             <Text style={styles.loggedInAsText}>Logged in as</Text>
@@ -45,7 +46,7 @@ export default function ProfileOverview() {
             <ProfileOptionButton title="Help" iconname="chatbox" iconColor="#a94b58" iconViewColor="#ddb2b8" />
         </View>
         <View style={styles.signoutButtonView}>
-            <TransparentButton title="Sign Out" onClick={logOut} buttonWidth="40%" buttonHeight={50} iconname="logout" iconsize={20} iconColor="#F0EBD8"/>
+            <TextAndIconButton title="Sign Out" onClick={logOut} iconName="logout" iconSize={25}/>
         </View>
     </LinearGradient>
   )
@@ -92,6 +93,8 @@ const styles = StyleSheet.create({
       borderRadius: 100,
       right: 0,
       bottom: 0,
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     userProfileIcon: {
       color: "#748CAB",

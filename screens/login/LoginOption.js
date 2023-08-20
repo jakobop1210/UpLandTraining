@@ -157,9 +157,8 @@ const styles = StyleSheet.create({
         width: "90%",
         height: "100%",
         paddingHorizontal: 10,
-        color: "white",
+        color: "#F0EBD8",
         fontSize: 18,
-        borderRadius: 5,
     },
     rememberMeView: {
         width: "100%",

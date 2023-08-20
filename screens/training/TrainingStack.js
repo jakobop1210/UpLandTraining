@@ -5,6 +5,7 @@ import TrainingScreen from "./TrainingScreen";
 import ProgramScreen from './ProgramScreen';
 import WorkoutScreen from './WorkoutScreen';
 import ExerciseHistoryScreen from './ExerciseHistoryScreen'
+import CreateNewProgram from './CreateNewProgram';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,10 @@ export default function TrainingStack() {
             <Stack.Screen 
               name="ExerciseHistory"
               component={ExerciseHistoryScreen}
+            /> 
+            <Stack.Screen 
+              name="CreateNewProgram"
+              component={CreateNewProgram}
             /> 
         </Stack.Navigator>
     );
