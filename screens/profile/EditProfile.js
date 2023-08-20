@@ -1,8 +1,10 @@
 import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { ActivityIndicator } from 'react-native-paper';
-import { updateProfile, updateEmail, updatePassword, getAuth } from 'firebase/auth'; 
+import { updateProfile, updateEmail, updatePassword } from 'firebase/auth'; 
+import { auth } from '../../firebaseAuth'
+
 import { useState } from 'react'
 
 //Components
@@ -10,8 +12,8 @@ import GoBackButton from '../../buttons/GoBackButton';
 import PurpleFadedButton from '../../buttons/PurpleFadedButton';
 
 
-export default function EditProfile({ route }) {
-  const { loggedInUser } = route.params;
+export default function EditProfile() {
+  const loggedInUser = auth.currentUser;
   const [name, setName] = useState(loggedInUser.displayName);
   const [email, setEmail] = useState(loggedInUser.email);
   const [password, setPassword] = useState(loggedInUser.password);
@@ -38,10 +40,13 @@ export default function EditProfile({ route }) {
 
   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
-      <GoBackButton />
-      <View style={styles.registerView}>
-            <Text style={styles.registerHeader}>Edit Profile</Text>
-            <Text style={styles.registerInformationText}>Edit information by filling in the input</Text>
+        <GoBackButton />
+        <View style={styles.registerView}>
+            <View style={styles.headerView}>
+              <Text style={styles.registerHeader}>Edit Profile</Text>
+              <Feather name="edit" size={30} color="#F0EBD8" />
+            </View>
+            <Text style={styles.registerInformationText}>Edit information in the input fields below</Text>
             <View style={styles.inputView}>
               <Ionicons name="person-add-outline" color="#BBB" size={24} />
                 <TextInput
@@ -92,7 +97,14 @@ export default function EditProfile({ route }) {
             <View style={styles.registerButtonView}>
               {loading 
                   ? <ActivityIndicator size="large" color="#F0EBD8" />
-                  : <PurpleFadedButton title="Update profile" onClick={updateProfileInformation} buttonWidth="100%" buttonHeight={50} startGradient={[1, 0]} endGradient={[0, 1]}/>
+                  : <PurpleFadedButton 
+                      title="Update profile" 
+                      onClick={updateProfileInformation} 
+                      buttonWidth="100%" 
+                      buttonHeight={50} 
+                      startGradient={[1, 0]} 
+                      endGradient={[0, 1]}
+                    />
               }
             </View>
         </View>
@@ -111,11 +123,17 @@ const styles = StyleSheet.create({
       width: "70%",
       height: "60%",
   },
+  headerView: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   registerHeader: {
       color: "#F0EBD8",
       fontSize: 35,
       fontWeight: "300",
-      marginBottom: 5
+      marginBottom: 5,
+      marginRight: 10
+
   },
   registerInformationText: {
       color: "#999",

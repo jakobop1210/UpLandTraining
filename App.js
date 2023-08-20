@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-        {currentUser ? <StackNavigator loggedInUser={currentUser}/> : <LoginScreen/>}
+        {currentUser ? <StackNavigator/> : <LoginScreen/>}
     </NavigationContainer>
   );
 }

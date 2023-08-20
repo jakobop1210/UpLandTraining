@@ -4,13 +4,13 @@ import React from 'react';
 
 //Screens
 import HomeScreen from './screens/home/HomeScreen';
-import TrainingScreen from './screens/training/TrainingScreen';
+import TrainingStack from './screens/training/TrainingStack';
 import ProgressScreen from './screens/progress/ProgressScreen';
-import ProfileScreen from './screens/profile/ProfileScreen';
+import ProfileStack from './screens/profile/ProfileStack';
 
 const Tab = createBottomTabNavigator();
 
-export default function StackNavigator({ loggedInUser }) {
+export default function StackNavigator() {
   return (
     <Tab.Navigator
         screenOptions={{
@@ -23,7 +23,6 @@ export default function StackNavigator({ loggedInUser }) {
         <Tab.Screen 
           name="Home" 
           component={HomeScreen} 
-          initialParams={{ loggedInUser }} 
           options={{
             tabBarIcon: ({color}) => (
                 <FontAwesome name="home" color={color} size={26} />
@@ -31,8 +30,7 @@ export default function StackNavigator({ loggedInUser }) {
         }}/>
         <Tab.Screen 
           name="Training" 
-          component={TrainingScreen} 
-          initialParams={{ loggedInUser }} 
+          component={TrainingStack} 
           options={{
             tabBarIcon: ({color}) => (
                 <FontAwesome5 name="dumbbell" color={color} size={26} />
@@ -41,7 +39,6 @@ export default function StackNavigator({ loggedInUser }) {
         <Tab.Screen 
           name="Progress" 
           component={ProgressScreen} 
-          initialParams={{ loggedInUser }} 
           options={{
             tabBarIcon: ({color}) => (
                 <FontAwesome name="line-chart" color={color} size={26} />
@@ -49,8 +46,7 @@ export default function StackNavigator({ loggedInUser }) {
         }}/> 
         <Tab.Screen 
         name="My profile" 
-        component={ProfileScreen} 
-        initialParams={{ loggedInUser }} 
+        component={ProfileStack} 
           options={{
             tabBarIcon: ({color}) => (
               <FontAwesome name="user" color={color} size={26} />

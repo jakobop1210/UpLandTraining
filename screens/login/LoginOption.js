@@ -47,7 +47,7 @@ export default function LoginOption({ changeToSignup }) {
             } else if (error.code === 'auth/wrong-password') {
                 alert('Incorrect password');
             } 
-        } finally {
+        } finally { 
             setLoading(false);
         }
     };
@@ -60,7 +60,7 @@ export default function LoginOption({ changeToSignup }) {
         if (response?.type == "success") {
             const { id_token } = response.params;
             const credential = GoogleAuthProvider.credential(id_token);
-            signInWithCredential(auth, credential)
+            signInWithCredential(auth, credential); 
         }
     }, [response])
  
