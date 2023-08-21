@@ -1,24 +1,25 @@
 import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 // Components
 import Header from '../../Header';
 import DynamicInput from './components/DynamicInput';
-import PurpleFadedButton from '../../buttons/PurpleFadedButton';
 
 export default function CreateProgramScreen() {
   const [programName, setProgramName] = useState('');
-  const [loading, setLoading] = useState('');
+  const navigation = useNavigation();
 
-  function createProgram() {
-
+  function createProgram(workoutInput) {
+    if (programName === '') {
+      alert("Program name cannot be empty");
+      return;
+    }
+    console.log(workoutInput)
+    alert(`Program "${programName}" created`);
+    navigation.goBack();
   }
-
-  function addWorkoutInput() {
-
-  }
-
 
   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
@@ -32,20 +33,11 @@ export default function CreateProgramScreen() {
         value={programName}
         style={styles.input}
       />
-      <DynamicInput labelText="Day" placeholderText="Workout name"/>
-      <View style={styles.createProgramButtonView}>
-        {loading 
-          ? <ActivityIndicator size="large" color="#F0EBD8" />
-          : <PurpleFadedButton 
-              title="Create Program" 
-              onClick={createProgram} 
-              buttonWidth="60%" 
-              buttonHeight={50} 
-              startGradient={[0, 0]} 
-              endGradient={[1, 0]}
-            />
-        }
-      </View>
+      <DynamicInput 
+        labelText="Day" 
+        placeholderText="Workout name"
+        createProgram={createProgram}
+      />
     </LinearGradient>
   )
 }
@@ -72,10 +64,4 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginTop: 30
   },
-  createProgramButtonView: {
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    alignItems: "center"
-  }
 });

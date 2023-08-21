@@ -3,19 +3,17 @@ import { StyleSheet , View, Text, TextInput, ScrollView, Input} from 'react-nati
 
 // Components
 import TextAndIconButton from '../../../buttons/TextAndIconButton';
+import PurpleFadedButton from '../../../buttons/PurpleFadedButton';
 
-export default function DynamicInput({ labelText, placeholderText, onChange }) {
-  const [inputFields, setInputFields] = useState([]);
-  const [inputs, setInputs] = useState([
+export default function DynamicInput({ labelText, placeholderText, createProgram }) {
+  const [loading, setLoading] = useState(false);
+  const [valuesList, setValuesList] = useState(['']);
+  const [inputFields, setInputFields] = useState([
     {
       inputLabel: <Text style={styles.inputLabel}>{labelText} 1</Text>,
       textInput: <TextInput
                     style={styles.input} 
-                    onChangeText={(text) => setInputFields(inputFields => {
-                      return inputFields.map((item, j) => {
-                        return j === 0 ? text : item
-                      })
-                    })}
+                    onChangeText={(text) => updateValuesList(text, valuesList.length-1)}
                     placeholder={placeholderText}
                     placeholderTextColor="#888"
                     maxLength={30}
@@ -23,30 +21,45 @@ export default function DynamicInput({ labelText, placeholderText, onChange }) {
     }
   ]);
 
+  function callCeateProgram() {  
+    createProgram(valuesList)
+  }
 
   function addInput() {
-      const inputNr = inputs.length + 1;
-      setInputs(inputs => [...inputs, 
-        {
-            inputLabel: <Text style={styles.inputLabel}>{labelText} {inputNr}</Text>,
-            textInput: <TextInput
-                          style={styles.input} 
-                          onChangeText={(text) => setInputFields(...inputFields, inputFields[inputNr-1] = text)}
-                          placeholder={placeholderText}
-                          placeholderTextColor="#888"
-                          maxLength={30}
-                        />
-        }
-      ]);  
+    const inputNr = inputFields.length + 1;
+    setInputFields(inputFields => [...inputFields, 
+      {
+        inputLabel: <Text style={styles.inputLabel}>{labelText} {inputNr}</Text>,
+        textInput: <TextInput
+                      style={styles.input} 
+                      onChangeText={(text) => updateValuesList(text, valuesList.length)}
+                      placeholder={placeholderText}
+                      placeholderTextColor="#888"
+                      maxLength={30}
+                    />
+      }
+    ]); 
+    setValuesList([...valuesList, ''])
   }  
 
   function removeInput() {
-    if (inputs.length > 1) {
-        let newInputs = [...inputs];
+    if (inputFields.length > 1) {
+        let newInputs = [...inputFields];
         newInputs.splice(-1, 1);
-        setInputs(newInputs);
+        setInputFields(newInputs);
+        let newList = [...valuesList];
+        newList.splice(-1, 1);
+        setValuesList(newList);
     }
-  }  
+  } 
+
+  function updateValuesList(text, inputNr) {
+    setValuesList(prevValuesList => {
+      const newList = [...prevValuesList];
+      newList[inputNr] = text;
+      return newList;
+    });
+  }
 
   return (
       <>
@@ -57,7 +70,7 @@ export default function DynamicInput({ labelText, placeholderText, onChange }) {
         <View style={styles.inputsView}>
           <View style={styles.scrollViewContainer}>
           <ScrollView>
-            {inputs.map((element, index) => (
+            {inputFields.map((element, index) => (
               <View key={index} style={styles.inputContainer}>
                 {element.inputLabel}
                 {element.textInput}
@@ -65,6 +78,19 @@ export default function DynamicInput({ labelText, placeholderText, onChange }) {
             ))}  
           </ScrollView>
           </View>
+        </View>
+        <View style={styles.createProgramButtonView}>
+          {loading 
+            ? <ActivityIndicator size="large" color="#F0EBD8" />
+            : <PurpleFadedButton 
+                title="Create Program" 
+                onClick={callCeateProgram} 
+                buttonWidth="60%" 
+                buttonHeight={50} 
+                startGradient={[0, 0]} 
+                endGradient={[1, 0]}
+              />
+          }
         </View>
       </>
   );
@@ -99,14 +125,19 @@ const styles = StyleSheet.create({
       fontSize: 18,
       marginRight: 10
   },
-
   input: {
-    width: "70%",
-    height: 50,
+    width: "60%",
+    height: 40,
     paddingHorizontal: 10,
     fontSize: 18,
     color: "#F0EBD8",
     borderColor: 'gray',
     borderBottomWidth: 1,
+  },
+  createProgramButtonView: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    alignItems: "center"
   }
 });

@@ -38,6 +38,7 @@ export default function ProfileOverview() {
             </View>
             <Text style={styles.loggedInAsText}>Logged in as</Text>
             <Text style={styles.userNameText}>{loggedInUser.displayName}</Text>
+            <Text style={styles.loggedInAsText}>{loggedInUser.email}</Text>
         </View>
         <View style={styles.userOptionsView}>
             <ProfileOptionButton navigateToScreen="EditProfile" title="Edit profile" iconname="user" iconColor="#4c3228" iconViewColor="#a08679" iconType="FontAwesome" />
@@ -104,7 +105,8 @@ const styles = StyleSheet.create({
       color: "#F0EBD8",
       fontSize: 13,
       opacity: 0.7, 
-      marginBottom: 5
+      marginBottom: 5,
+      marginTop: 5
     },
     userNameText: {
       color: "#F0EBD8",
