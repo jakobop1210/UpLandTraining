@@ -2,6 +2,8 @@ import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, onValue, remove } from 'firebase/database';
 
 //Components
 import Header from '../../Header';
@@ -10,11 +12,34 @@ import TextAndIconButton from '../../buttons/TextAndIconButton';
 
 export default function TrainingScreen() {
   const [editMode, setEditMode] = useState(false);
+  const [userPrograms, setUserPrograms] = useState([]);
+  const [programKeys, setProgramKeys] = useState([]);
+  const currentUser = getAuth().currentUser
   const navigation = useNavigation();
 
   useEffect(() => {
+    const db = getDatabase();
+    const starCountRef = ref(db, 'trainingPrograms/' + currentUser.uid);
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setUserPrograms(Object.values(data));
+        setProgramKeys(Object.keys(data))
+      }
+    });
 
-  }, [])
+  }, []);
+
+  function deleteProgram(programKey) {
+    const db = getDatabase();
+    remove(ref(db, `trainingPrograms/${currentUser.uid}/${programKey}`))
+    .then(() => {
+      alert(`Program deleted successfully`);
+    })
+    .catch((error) => {
+      console.error('Error deleting program:', error);
+    });
+  }
 
   function updateEditMode() {
     if (!editMode) {
@@ -24,7 +49,7 @@ export default function TrainingScreen() {
     }
   }
 
-  function createNewProgram() {
+  function goToCreateNewProgram() {
     navigation.navigate("CreateNewProgram")
   }
 
@@ -33,12 +58,16 @@ export default function TrainingScreen() {
       <Header title="My programs" onClickEdit={updateEditMode} showEditButton={true}/>
       <View style={styles.programsView}>
         <ScrollView style={styles.programsScrollView}>
-          <ProgramView programName="H2023" splitLength={7} focusPoint="Even" editMode={editMode}/>
-          <ProgramView programName="H2023" splitLength={7} focusPoint="Even" editMode={editMode}/>
-          <ProgramView programName="H2023" splitLength={7} focusPoint="Even" editMode={editMode}/>
-          <ProgramView programName="H2023" splitLength={7} focusPoint="Even" editMode={editMode}/>
-          <ProgramView programName="H2023" splitLength={7} focusPoint="Even"editMode={editMode}/>
-          <ProgramView programName="H2023" splitLength={7} focusPoint="Even" editMode={editMode}/>
+          {userPrograms.map((program, index) => (
+            <ProgramView
+              key={index}
+              programName={program.programName}
+              description={program.programDescription}
+              editMode={editMode}
+              deleteProgram={deleteProgram}
+              programKey={programKeys[index]}
+            />
+          ))}
         </ScrollView>
       </View>
           {editMode 
@@ -47,7 +76,7 @@ export default function TrainingScreen() {
                   <TextAndIconButton onClick={updateEditMode} title="Save" />
                 </View>
               : <TextAndIconButton 
-                  onClick={createNewProgram} 
+                  onClick={goToCreateNewProgram} 
                   title="Create new Program" 
                   buttonWidth="60%" 
                   buttonHeight={50}

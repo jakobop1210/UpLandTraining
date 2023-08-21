@@ -9,7 +9,8 @@ const firebaseConfig = {
   projectId: "upland-training",
   storageBucket: "upland-training.appspot.com",
   messagingSenderId: "941529421481",
-  appId: "1:941529421481:web:84daadc382f81dd3203bb8"
+  appId: "1:941529421481:web:84daadc382f81dd3203bb8",
+  databaseURL: "https://upland-training-default-rtdb.europe-west1.firebasedatabase.app"
 };
 
 // Initialize Firebase

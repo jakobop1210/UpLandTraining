@@ -99,13 +99,13 @@ export default function DynamicInput({ labelText, placeholderText, createProgram
 const styles = StyleSheet.create({
   addRemoveButtonContainer: {
       flexDirection: "row",
-      marginTop: 30,
+      marginTop: 20,
       width: "60%",
       justifyContent: "space-evenly"
   },
   inputsView: {
     width: "100%",
-    marginTop: 30,
+    marginTop: 20,
     height: 500,
     backgroundColor: "#1D2D44",
     paddingLeft: 40,
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30
   },
   scrollViewContainer: {
-    height: 320,
+    height: 260,
   },
   inputContainer: {
       marginTop: 30,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   createProgramButtonView: {
     position: "absolute",
-    bottom: 0,
+    bottom: -10,
     width: "100%",
     alignItems: "center"
   }
