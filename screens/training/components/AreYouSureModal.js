@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
     backDrop: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
         position: "absolute",
         width: width,
         height: height

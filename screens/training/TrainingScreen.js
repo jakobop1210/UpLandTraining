@@ -27,21 +27,20 @@ export default function TrainingScreen() {
       if (data) {
         setUserPrograms(Object.values(data));
         setProgramKeys(Object.keys(data))
+      } else {
+        setUserPrograms([]);
+        setProgramKeys([])
       }
     });
-
   }, []);
+
 
   function deleteProgram(programKey) {
     const db = getDatabase();
     remove(ref(db, `trainingPrograms/${currentUser.uid}/${programKey}`))
-    .then(() => {
-      alert(`Program deleted successfully`);
-    })
     .catch((error) => {
       console.error('Error deleting program:', error);
     });
-    console.log(userPrograms)
   }
 
   function updateEditMode() {
@@ -79,16 +78,19 @@ export default function TrainingScreen() {
       <Header title="My programs" onClickEdit={updateEditMode} showEditButton={true}/>
       <View style={styles.programsView}>
         <ScrollView style={styles.programsScrollView}>
-          {userPrograms.map((program, index) => (
-            <ProgramView
-              key={index}
-              programName={program.programName}
-              description={program.programDescription}
-              editMode={editMode}
-              clickDelete={showModal}
-              programKey={programKeys[index]}
-            />
-          ))}
+        {userPrograms.length === 0 
+          ? (<Text style={styles.noProgramText}>You have not created any programs yet. Get started by clicking the "Create new Program" button below!</Text>)
+          : (userPrograms.map((program, index) => (
+              <ProgramView
+                key={index}
+                programName={program.programName}
+                description={program.programDescription}
+                editMode={editMode}
+                clickDelete={showModal}
+                programKey={programKeys[index]}
+              />
+            ))
+        )}
         </ScrollView>
       </View>
         {editMode 
@@ -120,7 +122,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
   },
   programsView: {
-      height: 540,
+      height: 580,
       width: "100%",
       alignItems: "center",
       marginBottom: 10
@@ -131,11 +133,18 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     height: 50,
-},
-editModeButtonsView: {
-  width: "100%",
-  flexDirection: "row",
-  justifyContent: "center"
-}
+  },
+  editModeButtonsView: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  noProgramText: {
+    color: "#666666",
+    fontSize: 20,
+    width: 330,
+    marginTop: 180,
+    lineHeight: 35
+  }
 });
 

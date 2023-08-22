@@ -44,12 +44,12 @@ export default function DynamicInput({ labelText, placeholderText, createProgram
 
   function removeInput() {
     if (inputFields.length > 1) {
-        let newInputs = [...inputFields];
-        newInputs.splice(-1, 1);
-        setInputFields(newInputs);
-        let newList = [...valuesList];
-        newList.splice(-1, 1);
-        setValuesList(newList);
+      let newInputs = [...inputFields];
+      newInputs.splice(-1, 1);
+      setInputFields(newInputs);
+      let newList = [...valuesList];
+      newList.splice(-1, 1);
+      setValuesList(newList);
     }
   } 
 
@@ -99,7 +99,7 @@ export default function DynamicInput({ labelText, placeholderText, createProgram
 const styles = StyleSheet.create({
   addRemoveButtonContainer: {
       flexDirection: "row",
-      marginTop: 20,
+      marginTop: 30,
       width: "60%",
       justifyContent: "space-evenly"
   },
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30
   },
   scrollViewContainer: {
-    height: 260,
+    height: 270,
   },
   inputContainer: {
       marginTop: 30,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   createProgramButtonView: {
     position: "absolute",
-    bottom: -10,
+    bottom: 20,
     width: "100%",
     alignItems: "center"
   }
