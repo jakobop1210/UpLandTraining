@@ -9,11 +9,13 @@ import { getDatabase, ref, onValue, remove } from 'firebase/database';
 import Header from '../../Header';
 import ProgramView from './components/ProgramView';
 import TextAndIconButton from '../../buttons/TextAndIconButton';
+import AreYouSureModal from './components/AreYouSureModal';
 
 export default function TrainingScreen() {
   const [editMode, setEditMode] = useState(false);
   const [userPrograms, setUserPrograms] = useState([]);
   const [programKeys, setProgramKeys] = useState([]);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const currentUser = getAuth().currentUser
   const navigation = useNavigation();
 
@@ -53,6 +55,10 @@ export default function TrainingScreen() {
     navigation.navigate("CreateNewProgram")
   }
 
+  function updateShowConfirmModal() {
+    setShowConfirmModal(!showConfirmModal);
+  }
+
   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
       <Header title="My programs" onClickEdit={updateEditMode} showEditButton={true}/>
@@ -64,27 +70,31 @@ export default function TrainingScreen() {
               programName={program.programName}
               description={program.programDescription}
               editMode={editMode}
-              deleteProgram={deleteProgram}
+              deleteProgram={updateShowConfirmModal}
               programKey={programKeys[index]}
             />
           ))}
         </ScrollView>
       </View>
-          {editMode 
-              ? <View style={styles.editModeButtonsView}>
-                  <TextAndIconButton onClick={updateEditMode} title="Cancel" />
-                  <TextAndIconButton onClick={updateEditMode} title="Save" />
-                </View>
-              : <TextAndIconButton 
-                  onClick={goToCreateNewProgram} 
-                  title="Create new Program" 
-                  buttonWidth="60%" 
-                  buttonHeight={50}
-                  iconName="add"
-                  iconSize={25}
-                  iconType="MaterialIcons"
-                />
-          }
+        {editMode 
+          ? <View style={styles.editModeButtonsView}>
+              <TextAndIconButton 
+                onClick={updateEditMode} 
+                title="Done editing" 
+                iconName="done"
+                iconSize={25}
+              />
+            </View>
+          : <TextAndIconButton 
+              onClick={goToCreateNewProgram} 
+              title="Create new Program" 
+              iconName="add"
+              iconSize={25}
+            />
+        }
+        {showConfirmModal && 
+          <AreYouSureModal showModal={showConfirmModal} exitModal={updateShowConfirmModal}/>
+        }
     </LinearGradient>
   )
 }

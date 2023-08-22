@@ -89,7 +89,14 @@ export default function RegisterOption({ changeToLogin }) {
             <View style={styles.registerButtonView}>
               {loading 
                   ? <ActivityIndicator size="large" color="#F0EBD8" />
-                  : <PurpleFadedButton title="Register Account" onClick={handleRegister} buttonWidth="100%" buttonHeight={50} startGradient={[1, 0]} endGradient={[0, 1]}/>
+                  : <PurpleFadedButton 
+                      title="Register Account" 
+                      onClick={handleRegister} 
+                      buttonWidth="100%" 
+                      buttonHeight={50} 
+                      startGradient={[1, 0]} 
+                      endGradient={[0, 1]}
+                    />
               }
             </View>
             <View style={styles.gotoLoginView}>

@@ -5,11 +5,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 //Components
 import Header from '../../Header';
 
-export default function ProgramScreen() {
+export default function ProgramScreen({ route }) {
+  const programName = route.params.name
   
   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
-      <Header title="Reverse Push" showGoBackButton={true}/>
+      <Header title={programName} showGoBackButton={true} showEditButton={true}/>
     </LinearGradient>
   )
 }

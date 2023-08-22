@@ -8,8 +8,12 @@ export default function Header({ title, showGoBackButton, showEditButton, onClic
   
     return (
       <View style={styles.headerContainer}>
-        {showGoBackButton && <GoBackButton />}
-        <Text style={styles.title}>{title}</Text>
+        <View style={styles.goBackButtonView}> 
+          {showGoBackButton && <GoBackButton />}
+        </View>
+        <View style={styles.titleView}>
+          <Text style={styles.title}>{title}</Text>
+        </View>
         <View style={styles.editButtonView}> 
           {showEditButton && 
             <IconButton 
@@ -31,17 +35,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-end",
     width: "100%",
-    height: 120,
+    height: 110,
     marginBottom: 20
+  },
+  titleView: {
+    width: "75%",
+    alignItems: "center"
   },
   title: {
     color: "#F0EBD8",
-    fontSize: 30,
-    marginLeft: 10
+    fontSize: 25,
   },
   editButtonView: {
     position: "absolute",
     bottom: 0,
-    right: 30,
+    right: 25,
+  },
+  goBackButtonView: {
+    position: "absolute",
+    bottom: -8,
+    left: 0,
   }
 });
