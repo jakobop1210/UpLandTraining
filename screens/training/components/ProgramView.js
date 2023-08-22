@@ -3,11 +3,11 @@ import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import IconButton from '../../../buttons/IconButton';
 
-export default function ProgramDescriptionContainer({ programName, description, editMode, deleteProgram, programKey }) {
+export default function ProgramDescriptionContainer({ programName, description, editMode, clickDelete, programKey }) {
     const navigation = useNavigation();
 
     function deleteProgramWithKey() {
-        deleteProgram(programKey)
+      clickDelete(programKey)
     }
 
     return (

@@ -15,9 +15,9 @@ export default function TrainingScreen() {
   const [editMode, setEditMode] = useState(false);
   const [userPrograms, setUserPrograms] = useState([]);
   const [programKeys, setProgramKeys] = useState([]);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const currentUser = getAuth().currentUser
   const navigation = useNavigation();
+  const [modalComponent, setModalComponent] = useState(null)
 
   useEffect(() => {
     const db = getDatabase();
@@ -41,6 +41,7 @@ export default function TrainingScreen() {
     .catch((error) => {
       console.error('Error deleting program:', error);
     });
+    console.log(userPrograms)
   }
 
   function updateEditMode() {
@@ -51,12 +52,26 @@ export default function TrainingScreen() {
     }
   }
 
+  // Navigates to CreateNewProgram screen
   function goToCreateNewProgram() {
     navigation.navigate("CreateNewProgram")
   }
 
-  function updateShowConfirmModal() {
-    setShowConfirmModal(!showConfirmModal);
+  // Set the modalComponents so it becomes visible
+  function showModal(programKey) {
+    if (programKey) {
+      setModalComponent(
+        <AreYouSureModal 
+          exitModal={exitModal}
+          chosenProgramKey={programKey}
+          deleteProgram={deleteProgram}
+        />
+      )
+    }
+  }
+
+  function exitModal() {
+    setModalComponent(null)
   }
 
   return (
@@ -70,7 +85,7 @@ export default function TrainingScreen() {
               programName={program.programName}
               description={program.programDescription}
               editMode={editMode}
-              deleteProgram={updateShowConfirmModal}
+              clickDelete={showModal}
               programKey={programKeys[index]}
             />
           ))}
@@ -92,9 +107,7 @@ export default function TrainingScreen() {
               iconSize={25}
             />
         }
-        {showConfirmModal && 
-          <AreYouSureModal showModal={showConfirmModal} exitModal={updateShowConfirmModal}/>
-        }
+        {modalComponent}
     </LinearGradient>
   )
 }

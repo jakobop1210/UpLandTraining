@@ -2,34 +2,25 @@ import React, { useState } from 'react';
 import { StyleSheet, Modal, View, Text, Dimensions } from 'react-native';
 
 //Components
-import PurpleFadedButton from '../../../buttons/PurpleFadedButton';
-import TextAndIconButton from '../../../buttons/TextAndIconButton';
+import TextButton from '../../../buttons/TextButton';
 
-export default function AreYouSureModal({ showModal, exitModal}) {
-    
+export default function AreYouSureModal({ exitModal, chosenProgramKey, deleteProgram}) {
+  
+    function iAmSure() {
+        deleteProgram(chosenProgramKey)
+        exitModal()
+    }
 
     return (
-      <Modal visible={showModal} animationType="fade" transparent={true}>
+      <Modal visible={true} animationType="fade" transparent={true}>
         <View style={styles.parentView}>
             <View style={styles.backDrop} />
           <View style={styles.contentView}>
             <Text style={styles.headerText}>Delete program?</Text>
-            <Text style={styles.infoText}>Are you sure you want to delete the program? It will be permanently deleted</Text>
+            <Text style={styles.infoText}>Are you sure you want to delete the program? It will be deleted permanently, and cannot be restored.</Text>
             <View style={styles.buttonsView}>
-              <PurpleFadedButton 
-                  title="Cancel"  
-                  buttonWidth="45%" 
-                  buttonHeight={50}   
-                  startGradient={[1, 0]} 
-                  endGradient={[0, 1]}
-              />
-              <PurpleFadedButton 
-                  title="Delete program"  
-                  buttonWidth="45%" 
-                  buttonHeight={50}   
-                  startGradient={[1, 0]} 
-                  endGradient={[0, 1]}
-              />
+              <TextButton title="Cancel" onClick={exitModal}/>
+              <TextButton title="Yes, I'm sure" onClick={iAmSure} />
             </View>
           </View>
         </View>
@@ -56,7 +47,7 @@ const styles = StyleSheet.create({
     },
     contentView: {
         flexDirection: "column",
-        height: 200,
+        height: 220,
         width: 340,
         backgroundColor: "#1D2D44",
         padding: 20,
@@ -78,11 +69,12 @@ const styles = StyleSheet.create({
     infoText: {
         color: "#CCC",
         fontSize: 16,
-        marginTop: 5
+        marginTop: 5,
+        lineHeight: 25
     },
     buttonsView: {
         flexDirection: "row",
-        marginTop: 30,
+        marginTop: 20,
         justifyContent: "space-around"
     }
 });
