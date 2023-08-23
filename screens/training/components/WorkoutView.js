@@ -2,20 +2,18 @@ import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import IconButton from '../../../buttons/IconButton';
 
-export default function ProgramView(props) {
+export default function ProgramView({ workoutName, editMode, clickDelete, workoutKey }) {
   const navigation = useNavigation();
 
-  function deleteProgramWithKey() {
-    props.clickDelete(props.programKey)
+  function deleteWorkoutWithKey() {
+    clickDelete(workoutKey)
   }
 
   return (
     <Pressable
       onPress={() => {
-        navigation.navigate("ProgramScreen", {
-          name: props.programName,
-          key: props.programKey,
-          workoutsList: props.workouts
+        navigation.navigate("WorkoutScreen", {
+          name: workoutName
         })
       }}
       style={({ pressed }) => [
@@ -26,11 +24,11 @@ export default function ProgramView(props) {
         },
         styles.button
       ]}>
-      <View style={styles.ProgramDescriptionView}>
-        {props.editMode &&
+      <View style={styles.workoutDescriptionView}>
+        {editMode &&
           <View style={styles.deleteButtonView}>
             <IconButton
-              onClick={props.deleteProgramWithKey}
+              onClick={deleteProgramWithKey}
               iconName="delete-outline"
               iconType="MaterialIcons"
               iconSize={30}
@@ -38,12 +36,9 @@ export default function ProgramView(props) {
             />
           </View>
         }
-        <Text style={styles.programName}>{props.programName}</Text>
+        <Text style={styles.workoutName}>{workoutName}</Text>
         <ScrollView>
-          <Text style={styles.descriptionText}>
-            <Text style={styles.description}>Description: </Text>
-            {props.description}
-          </Text>
+          
         </ScrollView>
       </View>
     </Pressable>
@@ -51,32 +46,22 @@ export default function ProgramView(props) {
 }
 
 const styles = StyleSheet.create({
-  ProgramDescriptionView: {
+  workoutDescriptionView: {
     position: "relative",
-    width: 360,
+    width: 340,
     backgroundColor: "#3E5C76",
-    height: 140,
+    height: 90,
     borderRadius: 10,
     paddingTop: 15,
-    paddingLeft: 20,
-    marginTop: 30
+    paddingLeft: 30,
+    marginTop: 20
   },
-  programName: {
+  workoutName: {
     color: "#F0EBD8",
-    fontSize: 25,
+    fontSize: 23,
     fontWeight: "600",
     marginBottom: 8,
     width: "90%"
-  },
-  descriptionText: {
-    color: "#DDDDDD",
-    marginRight: 10,
-    fontSize: 15,
-    lineHeight: 23
-  },
-  description: {
-    fontWeight: '600',
-    color: "#F0EBD8"
   },
   deleteButtonView: {
     position: "absolute",

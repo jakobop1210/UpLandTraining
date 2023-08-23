@@ -1,12 +1,13 @@
 import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { ActivityIndicator } from 'react-native-paper';
 import { updateProfile, updateEmail, updatePassword } from 'firebase/auth'; 
 import { auth } from '../../firebaseAuth'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 // Components
+import InputWithIcon from '../login/components/InputWithIcon';
 import GoBackButton from '../../buttons/GoBackButton';
 import PurpleFadedButton from '../../buttons/PurpleFadedButton';
 
@@ -16,12 +17,16 @@ export default function EditProfile() {
   const [email, setEmail] = useState(loggedInUser.email);
   const [password, setPassword] = useState(loggedInUser.password);
   const [confirmPassword, setConfirmPassword] = useState(loggedInUser.password);
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
   const [loading, setLoading] = useState('');
 
   const updateProfileInformation = async () => {
     setLoading(true);
     if (password !== confirmPassword) {
       alert("The passwords dont match!")
+      setLoading(false);
       return;
     }
     try {
@@ -38,61 +43,43 @@ export default function EditProfile() {
 
   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
-      <GoBackButton />
-      <View style={styles.registerView}>
+      <View style={styles.goBackButtonView}>
+        <GoBackButton />
+      </View>
+      <View style={styles.editView}>
         <View style={styles.headerView}>
-          <Text style={styles.registerHeader}>Edit Profile</Text>
+          <Text style={styles.editHeader}>Edit Profile</Text>
           <Feather name="edit" size={30} color="#F0EBD8" />
         </View>
-        <Text style={styles.registerInformationText}>Edit information in the input fields below</Text>
-        <View style={styles.inputView}>
-          <Ionicons name="person-add-outline" color="#BBB" size={24} />
-          <TextInput
-            placeholder="Name"
-            placeholderTextColor="#888"
-            autoCapitalize="none"
-            onChangeText={setName}
-            value={name}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <Ionicons name="ios-mail-outline" color="#BBB" size={24} />
-          <TextInput
-            placeholder="Email"
-            keyboardType="email-address"
-            placeholderTextColor="#888"
-            autoCapitalize="none"
-            onChangeText={setEmail}
-            value={email}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <MaterialCommunityIcons name="account-key-outline" color="#AAA" size={24} />
-          <TextInput
-            placeholder="New password"
-            placeholderTextColor="#888"
-            autoCapitalize="none"
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <MaterialCommunityIcons name="account-key-outline" color="#AAA" size={24} />
-          <TextInput
-            placeholder="Confirm new password"
-            placeholderTextColor="#888"
-            autoCapitalize="none"
-            onChangeText={setConfirmPassword}
-            value={confirmPassword}
-            secureTextEntry
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.registerButtonView}>
+        <InputWithIcon 
+          value={name}
+          onChange={setName}
+          onSubmitRef={emailRef}
+          placeholder="Full Name"
+          iconName="person-outline"
+        />
+        <InputWithIcon 
+          value={email}
+          onChange={setEmail}
+          inputRef={emailRef}
+          placeholder="Email Adress"
+          iconName="ios-mail-outline"
+        />
+        <InputWithIcon
+          value={password}
+          onChange={setPassword}
+          onSubmitRef={confirmPasswordRef}
+          placeholder="Password"
+          iconName="key-outline"
+        />
+        <InputWithIcon
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+          inputRef={confirmPasswordRef}
+          placeholder="Password"
+          iconName="key-outline"
+        />
+        <View style={styles.updateButtonView}>
           {loading 
             ? <ActivityIndicator size="large" color="#F0EBD8" />
             : <PurpleFadedButton 
@@ -117,7 +104,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  registerView: {
+  goBackButtonView: {
+    position: "absolute",
+    left: 10,
+    top: 60
+  },
+  editView: {
     width: "70%",
     height: "60%",
   },
@@ -125,36 +117,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  registerHeader: {
+  editHeader: {
     color: "#F0EBD8",
     fontSize: 35,
     fontWeight: "300",
     marginBottom: 5,
     marginRight: 10
   },
-  registerInformationText: {
+  editInformationText: {
     color: "#999",
     fontSize: 12,
     marginLeft: 2
   },
-  inputView: {
-    width: '100%',
-    height: 60,
-    marginTop: 20,
-    borderColor: 'gray',
-    borderBottomWidth: 1,
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  input: {
-    width: "90%",
-    height: "100%",
-    paddingHorizontal: 10,
-    color: "white",
-    fontSize: 18,
-    borderRadius: 5,
-  },
-  registerButtonView: {
+  updateButtonView: {
     height: 120,
     justifyContent: "center"
   }

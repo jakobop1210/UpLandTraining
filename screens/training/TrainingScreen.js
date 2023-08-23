@@ -43,11 +43,7 @@ export default function TrainingScreen() {
   }
 
   function updateEditMode() {
-    if (!editMode) {
-      setEditMode(true);
-    } else {
-      setEditMode(false)
-    }
+    setEditMode(!editMode)
   }
 
   // Navigates to CreateNewProgram screen
@@ -84,6 +80,7 @@ export default function TrainingScreen() {
                 key={index}
                 programName={program.programName}
                 description={program.programDescription}
+                workouts={program.workouts}
                 editMode={editMode}
                 clickDelete={showModal}
                 programKey={programKeys[index]}

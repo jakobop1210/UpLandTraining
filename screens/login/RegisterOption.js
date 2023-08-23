@@ -15,10 +15,10 @@ export default function RegisterOption({ changeToLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [loading, setLoading] = useState('');
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+  const [loading, setLoading] = useState('');
 
   const handleRegister = async () => {
     setLoading(true);
