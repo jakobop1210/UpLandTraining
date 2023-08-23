@@ -4,10 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ExerciseHistoryScreen() {
   return (
-    <LinearGradient
-      colors={['#0D1321', '#1D2D44']} // Define your desired start and end colors
-      style={styles.container}
-    >
+    <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
       <Text>TrainingScreen</Text>
     </LinearGradient>
   )
@@ -15,10 +12,10 @@ export default function ExerciseHistoryScreen() {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      flexDirection: "column",
-      position: "relative",
-      alignItems: 'center',
-      justifyContent: "center",
+    flex: 1,
+    flexDirection: "column",
+    position: "relative",
+    alignItems: 'center',
+    justifyContent: "center",
   }
 });

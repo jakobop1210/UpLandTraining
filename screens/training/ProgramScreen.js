@@ -17,9 +17,9 @@ export default function ProgramScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      flexDirection: "column",
-      position: "relative",
-      alignItems: 'center',
+    flex: 1,
+    flexDirection: "column",
+    position: "relative",
+    alignItems: 'center',
   }
 });

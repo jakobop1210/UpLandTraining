@@ -11,31 +11,31 @@ const Stack = createNativeStackNavigator();
 
 export default function TrainingStack() {
     
-    return (
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-        }}> 
-            <Stack.Screen 
-              name="TrainingScreen"
-              component={TrainingScreen}
-            />
-            <Stack.Screen 
-              name="ProgramScreen"
-              component={ProgramScreen}
-            /> 
-            <Stack.Screen 
-              name="WorkoutScreen"
-              component={WorkoutScreen}
-            /> 
-            <Stack.Screen 
-              name="ExerciseHistory"
-              component={ExerciseHistoryScreen}
-            /> 
-            <Stack.Screen 
-              name="CreateNewProgram"
-              component={CreateNewProgram}
-            /> 
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false
+    }}> 
+      <Stack.Screen 
+        name="TrainingScreen"
+        component={TrainingScreen}
+      />
+      <Stack.Screen 
+        name="ProgramScreen"
+        component={ProgramScreen}
+      /> 
+      <Stack.Screen 
+        name="WorkoutScreen"
+        component={WorkoutScreen}
+      /> 
+      <Stack.Screen 
+        name="ExerciseHistory"
+        component={ExerciseHistoryScreen}
+      /> 
+      <Stack.Screen 
+        name="CreateNewProgram"
+        component={CreateNewProgram}
+      /> 
+    </Stack.Navigator>
+  );
 }

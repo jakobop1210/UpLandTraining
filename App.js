@@ -1,11 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 //Components
 import LoginScreen from './screens/login/LoginScreen';
 import StackNavigator from './StackNavigator';
-
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -22,7 +21,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-        {currentUser ? <StackNavigator/> : <LoginScreen/>}
+      {currentUser ? <StackNavigator/> : <LoginScreen/>}
     </NavigationContainer>
   );
 }

@@ -13,7 +13,7 @@ import IconButton from '../../buttons/IconButton';
 export default function CreateProgramScreen() {
   const [programName, setProgramName] = useState('New Program');
   const [headerEditable, setHeaderEditable] = useState(false);
-  const inputRef = useRef(null); 
+  const inputRef = useRef(null);
   const [programDescription, setProgramDescription] = useState('');
   const navigation = useNavigation();
 
@@ -32,7 +32,7 @@ export default function CreateProgramScreen() {
       programName: programName,
       programDescription: programDescription,
       workouts: workoutInput
-  });
+    });
     alert(`Program "${programName}" created`);
     navigation.goBack();
   }
@@ -59,17 +59,17 @@ export default function CreateProgramScreen() {
           style={styles.programNameInput}
           maxLength={25}
         />
-        <IconButton 
-          iconName="edit" 
+        <IconButton
+          iconName="edit"
           onClick={updateHeaderEditable}
-          iconSize={30} 
-          iconColor="#F0EBD8" 
+          iconSize={30}
+          iconColor="#F0EBD8"
           iconType="AntDesign"
         />
       </View>
       <TextInput
         placeholder="Enter a program description..."
-        multiline={true} 
+        multiline={true}
         maxLength={120}
         placeholderTextColor="#888"
         autoCapitalize="none"
@@ -77,8 +77,8 @@ export default function CreateProgramScreen() {
         value={programDescription}
         style={styles.inputArea}
       />
-      <DynamicInput 
-        labelText="Day" 
+      <DynamicInput
+        labelText="Day"
         placeholderText="Workout name"
         createProgram={createProgram}
       />
@@ -88,10 +88,10 @@ export default function CreateProgramScreen() {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      flexDirection: "column",
-      position: "relative",
-      alignItems: 'center',
+    flex: 1,
+    flexDirection: "column",
+    position: "relative",
+    alignItems: 'center',
   },
   programNameInputView: {
     flexDirection: "row",

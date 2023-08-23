@@ -17,7 +17,7 @@ export default function TrainingScreen() {
   const [programKeys, setProgramKeys] = useState([]);
   const currentUser = getAuth().currentUser
   const navigation = useNavigation();
-  const [modalComponent, setModalComponent] = useState(null)
+  const [areYouSureModal, setAreYouSureModal] = useState(null)
 
   useEffect(() => {
     const db = getDatabase();
@@ -33,7 +33,6 @@ export default function TrainingScreen() {
       }
     });
   }, []);
-
 
   function deleteProgram(programKey) {
     const db = getDatabase();
@@ -59,7 +58,7 @@ export default function TrainingScreen() {
   // Set the modalComponents so it becomes visible
   function showModal(programKey) {
     if (programKey) {
-      setModalComponent(
+      setAreYouSureModal(
         <AreYouSureModal 
           exitModal={exitModal}
           chosenProgramKey={programKey}
@@ -70,7 +69,7 @@ export default function TrainingScreen() {
   }
 
   function exitModal() {
-    setModalComponent(null)
+    setAreYouSureModal(null)
   }
 
   return (
@@ -94,8 +93,7 @@ export default function TrainingScreen() {
         </ScrollView>
       </View>
         {editMode 
-          ? 
-            <TextAndIconButton 
+          ? <TextAndIconButton 
               onClick={updateEditMode} 
               title="Done editing" 
               iconName="done"
@@ -108,7 +106,7 @@ export default function TrainingScreen() {
               iconSize={25}
             />
         }
-        {modalComponent}
+        {areYouSureModal}
     </LinearGradient>
   )
 }
@@ -138,4 +136,3 @@ const styles = StyleSheet.create({
     lineHeight: 35
   }
 });
-

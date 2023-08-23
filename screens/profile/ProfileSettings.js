@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react'
 
@@ -15,8 +15,8 @@ export default function ProfileSettings() {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      flexDirection: "column",
-      alignItems: 'center',
+    flex: 1,
+    flexDirection: "column",
+    alignItems: 'center',
   }
 });

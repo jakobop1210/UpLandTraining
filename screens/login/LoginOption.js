@@ -1,4 +1,21 @@
-import { StyleSheet, Text, Pressable } from 'react-native';
+import { StyleSheet, View, TextInput, Text } from 'react-native';
+import Checkbox from 'expo-checkbox';
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'; 
+import React, { useEffect, useState, useRef } from 'react';
+import { auth } from '../../firebaseAuth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { ActivityIndicator } from 'react-native-paper';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+
+//Components
+import PurpleFadedButton from '../../buttons/PurpleFadedButton';
+import GotoSignUpButton from '../../buttons/GotoSignUpButton';
+import GoogleLogo from '../../assets/images/googleLogo.png';
+import FacebookLogo from '../../assets/images/facebookLogo.png';
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginOption({ changeToSignup }) {
   const [email, setEmail] = useState('');

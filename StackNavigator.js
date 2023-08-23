@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'; 
-import React from 'react';
 
 //Screens
 import HomeScreen from './screens/home/HomeScreen';
@@ -25,7 +24,7 @@ export default function StackNavigator() {
           component={HomeScreen} 
           options={{
             tabBarIcon: ({color}) => (
-                <FontAwesome name="home" color={color} size={26} />
+              <FontAwesome name="home" color={color} size={26} />
             )
         }}/>
         <Tab.Screen 
@@ -33,7 +32,7 @@ export default function StackNavigator() {
           component={TrainingStack} 
           options={{
             tabBarIcon: ({color}) => (
-                <FontAwesome5 name="dumbbell" color={color} size={26} />
+              <FontAwesome5 name="dumbbell" color={color} size={26} />
             )
         }}/>
         <Tab.Screen 
@@ -41,7 +40,7 @@ export default function StackNavigator() {
           component={ProgressScreen} 
           options={{
             tabBarIcon: ({color}) => (
-                <FontAwesome name="line-chart" color={color} size={26} />
+              <FontAwesome name="line-chart" color={color} size={26} />
             )
         }}/> 
         <Tab.Screen 
