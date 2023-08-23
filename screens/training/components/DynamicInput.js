@@ -83,13 +83,13 @@ export default function DynamicInput({ labelText, placeholderText, createProgram
         {loading
           ? <ActivityIndicator size="large" color="#F0EBD8" />
           : <PurpleFadedButton
-            title="Create Program"
-            onClick={callCeateProgram}
-            buttonWidth="60%"
-            buttonHeight={50}
-            startGradient={[0, 0]}
-            endGradient={[1, 0]}
-          />
+              title="Create Program"
+              onClick={callCeateProgram}
+              buttonWidth="60%"
+              buttonHeight={50}
+              startGradient={[0, 0]}
+              endGradient={[1, 0]}
+            />
         }
       </View>
     </>

@@ -1,6 +1,4 @@
-import { StyleSheet, View, TextInput, Text } from 'react-native';
-import Checkbox from 'expo-checkbox';
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'; 
+import { StyleSheet, View, Text } from 'react-native';
 import React, { useEffect, useState, useRef } from 'react';
 import { auth } from '../../firebaseAuth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -10,6 +8,7 @@ import * as Google from 'expo-auth-session/providers/google';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 
 //Components
+import InputWithIcon from './components/InputWithIcon';
 import PurpleFadedButton from '../../buttons/PurpleFadedButton';
 import GotoSignUpButton from '../../buttons/GotoSignUpButton';
 import GoogleLogo from '../../assets/images/googleLogo.png';
@@ -21,7 +20,6 @@ export default function LoginOption({ changeToSignup }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
   const passwordRef = useRef();
   const [request, response, promtAsync] = Google.useAuthRequest({
     webClientId: "742231169006-lrb1evl5kkahcf176c1dlr7ta5tbut4s.apps.googleusercontent.com",
@@ -65,42 +63,20 @@ export default function LoginOption({ changeToSignup }) {
     <View style={styles.loginView}>
       <Text style={styles.loginHeader}>Login to Account</Text>
       <Text style={styles.loginInformationText}>Please fill in the information below</Text>
-      <View style={styles.inputView}>
-        <Ionicons name="ios-mail-outline" color="#BBB" size={24} />
-        <TextInput
-          placeholder="Email Address"
-          placeholderTextColor="#888"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          onChangeText={setEmail}
-          value={email}
-          returnKeyType="next"
-          onSubmitEditing={() => {passwordRef.current.focus()}}
-          style={styles.input}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <MaterialCommunityIcons name="account-key-outline" color="#AAA" size={24} />
-        <TextInput
-          ref={passwordRef}
-          placeholder="Password"
-          placeholderTextColor="#888"
-          autoCapitalize="none"
-          onChangeText={setPassword}
-          value={password}
-          secureTextEntry
-          style={styles.input}
-        />
-      </View>
-      <View style={styles.rememberMeView}>
-        <Checkbox 
-          style={styles.checkbox} 
-          value={rememberMe} 
-          onValueChange={setRememberMe} 
-          color={rememberMe ? '#673ab7' : undefined}
-        />
-        <Text style={styles.rememberMeText}>Remember Me?</Text>
-      </View>
+      <InputWithIcon 
+        value={email}
+        onChange={setEmail}
+        onSubmitRef={passwordRef}
+        placeholder="Email Adress"
+        iconName="ios-mail-outline"
+      />
+      <InputWithIcon
+        value={password}
+        onChange={setPassword}
+        inputRef={passwordRef}
+        placeholder="Password"
+        iconName="key-outline"
+      />
       <View style={styles.loginButtonView}>
         {loading 
           ? <ActivityIndicator size="large" color="#F0EBD8" />
@@ -151,45 +127,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginLeft: 2
   },
-  inputView: {
-    width: '100%',
-    height: 60,
-    marginTop: 20,
-    borderColor: 'gray',
-    borderBottomWidth: 1,
-    flexDirection: "row",
-    alignItems: "center"
-  },
   providerLoginView: {
     marginTop: 40,
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  input: {
-    width: "90%",
-    height: "100%",
-    paddingHorizontal: 10,
-    color: "#F0EBD8",
-    fontSize: 18,
-  },
-  rememberMeView: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginTop: 20,
-    marginBottom: 10
-  },
-  rememberMeText: {
-    color: "#CCC",
-    fontSize: 13,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    marginRight: 10,
-    borderWidth: 1,
   },
   loginButtonView: {
     height: 120,

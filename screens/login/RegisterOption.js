@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ActivityIndicator } from 'react-native-paper';
 
 // Components
+import InputWithIcon from './components/InputWithIcon';
 import PurpleFadedButton from '../../buttons/PurpleFadedButton';
 import GotoSignUpButton from '../../buttons/GotoSignUpButton';
 
@@ -47,62 +48,36 @@ export default function RegisterOption({ changeToLogin }) {
     <View style={styles.registerView}>
       <Text style={styles.registerHeader}>Create Account</Text>
       <Text style={styles.registerInformationText}>Please fill in the information below</Text>
-      <View style={styles.inputView}>
-        <Ionicons name="person-add-outline" color="#BBB" size={24} />
-        <TextInput
-          placeholder="Name"
-          placeholderTextColor="#888"
-          autoCapitalize="none"
-          onChangeText={setName}
-          value={name}
-          onSubmitEditing={() => handleNext(emailRef)}
-          returnKeyType="next"
-          style={styles.input}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <Ionicons name="ios-mail-outline" color="#BBB" size={24} />
-        <TextInput
-          ref={emailRef}
-          placeholder="Email"
-          keyboardType="email-address"
-          placeholderTextColor="#888"
-          autoCapitalize="none"
-          onChangeText={setEmail}
-          value={email}
-          onSubmitEditing={() => handleNext(passwordRef)}
-          returnKeyType="next"
-          style={styles.input}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <MaterialCommunityIcons name="account-key-outline" color="#AAA" size={24} />
-        <TextInput
-          ref={passwordRef}
-          placeholder="Password"
-          placeholderTextColor="#888"
-          autoCapitalize="none"
-          onChangeText={setPassword}
-          value={password}
-          secureTextEntry
-          onSubmitEditing={() => handleNext(confirmPasswordRef)}
-          returnKeyType="next"
-          style={styles.input}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <MaterialCommunityIcons name="account-key-outline" color="#AAA" size={24} />
-        <TextInput
-          ref={confirmPasswordRef}
-          placeholder="Confirm Password"
-          placeholderTextColor="#888"
-          autoCapitalize="none"
-          onChangeText={setConfirmPassword}
-          value={confirmPassword}
-          secureTextEntry
-          style={styles.input}
-        />
-      </View>
+      <InputWithIcon 
+        value={name}
+        onChange={setName}
+        onSubmitRef={emailRef}
+        placeholder="Full Name"
+        iconName="person-outline"
+      />
+      <InputWithIcon 
+        value={email}
+        onChange={setEmail}
+        inputRef={emailRef}
+        onSubmitRef={passwordRef}
+        placeholder="Email Adress"
+        iconName="ios-mail-outline"
+      />
+      <InputWithIcon
+        value={password}
+        onChange={setPassword}
+        inputRef={passwordRef}
+        onSubmitRef={confirmPasswordRef}
+        placeholder="Password"
+        iconName="key-outline"
+      />
+      <InputWithIcon
+        value={confirmPassword}
+        onChange={setConfirmPassword}
+        inputRef={confirmPasswordRef}
+        placeholder="Password"
+        iconName="key-outline"
+      />
       <View style={styles.registerButtonView}>
         {loading
           ? <ActivityIndicator size="large" color="#F0EBD8" />
@@ -139,22 +114,6 @@ const styles = StyleSheet.create({
     color: "#999",
     fontSize: 12,
     marginLeft: 2
-  },
-  inputView: {
-    width: '100%',
-    height: 60,
-    marginTop: 20,
-    borderColor: 'gray',
-    borderBottomWidth: 1,
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  input: {
-    width: "90%",
-    height: "100%",
-    paddingHorizontal: 10,
-    color: "#F0EBD8",
-    fontSize: 18,
   },
   registerButtonView: {
     height: 140,
