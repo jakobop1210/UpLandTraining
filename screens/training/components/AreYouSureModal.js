@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     contentView: {
         flexDirection: "column",
         height: 220,
-        width: 340,
+        width: 320,
         backgroundColor: "#1D2D44",
         padding: 20,
         borderRadius: 20,

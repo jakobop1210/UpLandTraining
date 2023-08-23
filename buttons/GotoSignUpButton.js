@@ -1,5 +1,4 @@
 import { StyleSheet, Pressable, Text } from 'react-native'
-import React from 'react'
 
 export default function GotoSignUpButton({ onClick, title }) {
   return (
@@ -18,9 +17,9 @@ export default function GotoSignUpButton({ onClick, title }) {
 }
 
 const styles = StyleSheet.create({
-    gotoSignupButtonText: {
-        fontSize: 17,
-        color: "#748CAB",
-        marginLeft: 6
-    }
+  gotoSignupButtonText: {
+    fontSize: 17,
+    color: "#748CAB",
+    marginLeft: 6
+  }
 })

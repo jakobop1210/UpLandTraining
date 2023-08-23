@@ -94,14 +94,13 @@ export default function TrainingScreen() {
         </ScrollView>
       </View>
         {editMode 
-          ? <View style={styles.editModeButtonsView}>
-              <TextAndIconButton 
-                onClick={updateEditMode} 
-                title="Done editing" 
-                iconName="done"
-                iconSize={25}
-              />
-            </View>
+          ? 
+            <TextAndIconButton 
+              onClick={updateEditMode} 
+              title="Done editing" 
+              iconName="done"
+              iconSize={25}
+            />
           : <TextAndIconButton 
               onClick={goToCreateNewProgram} 
               title="Create new Program" 
@@ -122,7 +121,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
   },
   programsView: {
-      height: 580,
+      height: 560,
       width: "100%",
       alignItems: "center",
       marginBottom: 10
@@ -130,14 +129,6 @@ const styles = StyleSheet.create({
   programsScrollView: {
       flex: 1,
       flexDirection: "column",
-  },
-  buttonView: {
-    height: 50,
-  },
-  editModeButtonsView: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "center"
   },
   noProgramText: {
     color: "#666666",

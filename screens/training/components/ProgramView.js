@@ -54,9 +54,9 @@ const styles = StyleSheet.create({
         position: "relative",
         width: 360,
         backgroundColor: "#3E5C76",
-        height: 135,
+        height: 140,
         borderRadius: 10,
-        paddingTop: 20,
+        paddingTop: 15,
         paddingLeft: 20,
         marginTop: 30
     },
@@ -68,12 +68,14 @@ const styles = StyleSheet.create({
         width: "90%"
     },
     descriptionText: {
-        color: "#F0EBD8",
+        color: "#DDDDDD",
         marginRight: 10,
-        fontSize: 15
+        fontSize: 15,
+        lineHeight: 23
     },
     description: {
-        fontWeight: '800'
+        fontWeight: '600',
+        color: "#F0EBD8"
     },
     deleteButtonView: {
         position: "absolute",
