@@ -9,6 +9,8 @@ import IconButton from '../../../buttons/IconButton';
 export default function CreateExerciseModal({ exitModal, workoutKey, programKey }) {
   const [exerciseName, setExerciseName] = useState('');
 
+
+  // Add exercise to database to workouts/programkey/workoutkey
   function addExercise(repsList) {
     if (exerciseName === '') {
       alert("Program name cannot be empty");
@@ -46,7 +48,7 @@ export default function CreateExerciseModal({ exitModal, workoutKey, programKey 
             onChangeText={setExerciseName}
             value={exerciseName}
             style={styles.exerciseNameInput}
-            maxLength={25}
+            maxLength={35}
           />
           <DynamicInput
             labelText="Set"

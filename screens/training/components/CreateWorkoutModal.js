@@ -10,6 +10,7 @@ import IconButton from '../../../buttons/IconButton';
 export default function CreateWorkoutModal({ exitModal, programKey }) {
   const [workoutName, setWorkoutName] = useState('');
 
+  // Add workout to database to workouts/programkey
   function addWorkout() {
     if (workoutName === '') {
       alert("Workout name cannot be empty");

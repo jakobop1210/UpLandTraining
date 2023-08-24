@@ -13,12 +13,13 @@ import AreYouSureModal from './components/AreYouSureModal';
 
 export default function TrainingScreen() {
   const [editMode, setEditMode] = useState(false);
-  const [programKeys, setProgramKeys] = useState([]);
   const [userPrograms, setUserPrograms] = useState([]);
+  const [programKeys, setProgramKeys] = useState([]);
   const currentUser = getAuth().currentUser;
   const navigation = useNavigation();
   const [areYouSureModal, setAreYouSureModal] = useState(null)
 
+  // Fetch the training programs for the logged in user
   useEffect(() => {
     const db = getDatabase();
     const starCountRef = ref(db, 'trainingPrograms/' + currentUser.uid);
@@ -49,6 +50,7 @@ export default function TrainingScreen() {
     });
   }
 
+  // Set editmode to be the opposite of its current value
   function updateEditMode() {
     setEditMode(!editMode)
   }
@@ -58,7 +60,7 @@ export default function TrainingScreen() {
     navigation.navigate("CreateNewProgram")
   }
 
-  // Set the modalComponents so it becomes visible
+  // Set areYouSureModal so it becomes visible
   function showModal(programKey) {
     if (programKey) {
       setAreYouSureModal(
@@ -71,6 +73,7 @@ export default function TrainingScreen() {
     }
   }
 
+  // Exit modal by setting it to null
   function exitModal() {
     setAreYouSureModal(null)
   }

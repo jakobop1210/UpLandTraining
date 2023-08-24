@@ -25,6 +25,7 @@ export default function DynamicInput({ labelText, placeholderText, onClickCreate
     onClickCreate(valuesList)
   }
 
+  // Add input to screen by clicking the "Add+" button
   function addInput() {
     const inputNr = inputFields.length + 1;
     setInputFields(inputFields => [...inputFields,
@@ -42,6 +43,7 @@ export default function DynamicInput({ labelText, placeholderText, onClickCreate
     setValuesList([...valuesList, ''])
   }
 
+  // Remove input from screen by clicking the "Remove-" button
   function removeInput() {
     if (inputFields.length > 1) {
       let newInputs = [...inputFields];
@@ -53,6 +55,7 @@ export default function DynamicInput({ labelText, placeholderText, onClickCreate
     }
   }
 
+  // Update valuesList when editing one of the inputs
   function updateValuesList(text, inputNr) {
     setValuesList(prevValuesList => {
       const newList = [...prevValuesList];

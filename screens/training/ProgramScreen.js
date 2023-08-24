@@ -20,16 +20,18 @@ export default function ProgramScreen({ route }) {
   const [areYouSureModal, setAreYouSureModal] = useState(null)
   const [createWorkoutModal, setCreateWorkoutModal] = useState(null);
 
+
+  // Fetch all the workouts belonging to the program with key = programKey
   useEffect(() => {
     const db = getDatabase();
-    const starCountRef = ref(db, `workouts/${programKey}`);
+    const starCountRef = ref(db, 'workouts/' + programKey);
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
         setWorkouts(Object.values(data));
         setWorkoutsKeys(Object.keys(data));
       } else {
-        setUserPrograms([]);
+        setWorkouts([]);
         setWorkoutsKeys([])
       } (error) => {
         console.error("Error fetching workouts:", error);
@@ -37,6 +39,7 @@ export default function ProgramScreen({ route }) {
     });
   }, []);
 
+  // Delete workout with key = workoutKey
   function deleteWorkout(workoutKey) {
     const db = getDatabase();
     remove(ref(db, `workouts/${programKey}/${workoutKey}`))
@@ -45,11 +48,12 @@ export default function ProgramScreen({ route }) {
     });
   }
 
+  // Set editmote to the opposite of its current value
   function updateEditMode() {
     setEditMode(!editMode)
   }
 
-  // Navigates to CreateNewProgram screen
+  // Set createWorkoutModal so it becomes visible
   function showCreateNewWorkoutModal() {
     setCreateWorkoutModal(
       <CreateWorkoutModal 
@@ -59,6 +63,7 @@ export default function ProgramScreen({ route }) {
     )
   }
 
+  // Set showAreYouSureModal so it becomes visible
   function showAreYoSureModal(workoutKey) {
     if (programKey) {
       setAreYouSureModal(
@@ -85,7 +90,7 @@ export default function ProgramScreen({ route }) {
       <View style={styles.workoutsView}>
         <ScrollView style={styles.workoutsScrollView}>
           {workouts.length === 0 
-            ? <Text style={styles.noProgramText}>
+            ? <Text style={styles.noWorkoutsText}>
                 You have not created workouts yet. Get started 
                 by clicking the "Add workouts" button below!
               </Text>
@@ -138,5 +143,12 @@ const styles = StyleSheet.create({
   workoutsScrollView: {
     flex: 1,
     flexDirection: "column",
+  },
+  noWorkoutsText: {
+    color: "#666666",
+    fontSize: 20,
+    width: 330,
+    marginTop: 180,
+    lineHeight: 35
   }
 });
