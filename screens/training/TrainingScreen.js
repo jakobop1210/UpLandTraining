@@ -13,9 +13,9 @@ import AreYouSureModal from './components/AreYouSureModal';
 
 export default function TrainingScreen() {
   const [editMode, setEditMode] = useState(false);
-  const [userPrograms, setUserPrograms] = useState([]);
   const [programKeys, setProgramKeys] = useState([]);
-  const currentUser = getAuth().currentUser
+  const [userPrograms, setUserPrograms] = useState([]);
+  const currentUser = getAuth().currentUser;
   const navigation = useNavigation();
   const [areYouSureModal, setAreYouSureModal] = useState(null)
 
@@ -25,20 +25,27 @@ export default function TrainingScreen() {
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        setUserPrograms(Object.values(data));
+        setUserPrograms(Object.values(data))
         setProgramKeys(Object.keys(data))
       } else {
         setUserPrograms([]);
         setProgramKeys([])
-      }
+      } (error) => {
+        console.error("Error fetching programs:", error);
+      };
     });
   }, []);
 
+  // Delete program with programKey, including belonging workouts and exercises
   function deleteProgram(programKey) {
     const db = getDatabase();
     remove(ref(db, `trainingPrograms/${currentUser.uid}/${programKey}`))
     .catch((error) => {
       console.error('Error deleting program:', error);
+    });
+    remove(ref(db, `workouts/${programKey}`))
+    .catch((error) => {
+      console.error('Error deleting workouts:', error);
     });
   }
 
@@ -57,8 +64,8 @@ export default function TrainingScreen() {
       setAreYouSureModal(
         <AreYouSureModal 
           exitModal={exitModal}
-          chosenProgramKey={programKey}
-          deleteProgram={deleteProgram}
+          chosenKey={programKey}
+          deleteElement={deleteProgram}
         />
       )
     }
@@ -74,18 +81,20 @@ export default function TrainingScreen() {
       <View style={styles.programsView}>
         <ScrollView style={styles.programsScrollView}>
         {userPrograms.length === 0 
-          ? (<Text style={styles.noProgramText}>You have not created any programs yet. Get started by clicking the "Create new Program" button below!</Text>)
-          : (userPrograms.map((program, index) => (
+          ? <Text style={styles.noProgramText}>
+              You have not created any programs yet. Get started 
+              by clicking the "Create new Program" button below!
+            </Text>
+          : userPrograms.map((program, index) => (
               <ProgramView
                 key={index}
                 programName={program.programName}
                 description={program.programDescription}
-                workouts={program.workouts}
                 editMode={editMode}
                 clickDelete={showModal}
                 programKey={programKeys[index]}
               />
-            ))
+            )
         )}
         </ScrollView>
       </View>

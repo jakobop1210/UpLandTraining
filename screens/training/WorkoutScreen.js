@@ -1,15 +1,37 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getDatabase, ref, onValue, remove } from 'firebase/database';
 
 // Components
 import Header from '../../Header';
+import WorkoutView from './components/WorkoutView';
 import CreateExerciseModal from './components/CreateExerciseModal';
 import TextAndIconButton from '../../buttons/TextAndIconButton';
 
 export default function ProgramScreen({ route }) {
-  const workoutName = route.params.name
-  const [createExerciseModal, setCreateExerciseModal] = useState(null)
+  const workoutName = route.params.name;
+  const workoutKey = route.params.workoutKey;
+  const programKey = route.params.programKey;
+  const [exercises, setExercises] = useState([]);
+  const [createExerciseModal, setCreateExerciseModal] = useState(null);
+
+
+  // Fetch exercises based on programKey and workoutKey
+  useEffect(() => {
+    const db = getDatabase();
+    const starCountRef = ref(db, `workouts/${programKey}/${workoutKey}`);
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setExercises(Object.values(data));
+      } else {
+        setExercises([]);
+      } (error) => {
+        console.error("Error fetching exercises:", error);
+      };
+    });
+  }, []);
 
   function updateEditMode() {
     setEditMode(!editMode)
@@ -19,6 +41,8 @@ export default function ProgramScreen({ route }) {
     setCreateExerciseModal(
       <CreateExerciseModal 
         exitModal={exitModal}
+        workoutKey={workoutKey}
+        programKey={programKey}
       />
     )
   }
@@ -32,7 +56,18 @@ export default function ProgramScreen({ route }) {
       <Header title={workoutName} showGoBackButton={true} showEditButton={true} onClickEdit={updateEditMode}/>
       <View style={styles.exercisesView}>
         <ScrollView style={styles.exercisesScrollView}>
-        
+          {exercises.length === 0 
+            ? <Text style={styles.noProgramText}>
+                You have not created exercises yet. Get started 
+                by clicking the "Add exercise" button below!
+              </Text>
+            : exercises.slice(0, -1).map((excercise, index) => (
+                <WorkoutView
+                  key={index}
+                  workoutName={excercise.exerciseName}
+                />
+              )
+          )}
         </ScrollView>
       </View>
       <TextAndIconButton 

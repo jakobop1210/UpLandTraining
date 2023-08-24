@@ -3,10 +3,10 @@ import { StyleSheet, Modal, View, Text, Dimensions } from 'react-native';
 // Components
 import TextButton from '../../../buttons/TextButton';
 
-export default function AreYouSureModal({ exitModal, chosenProgramKey, deleteProgram }) {
+export default function AreYouSureModal({ exitModal, chosenKey , deleteElement }) {
 
   function iAmSure() {
-    deleteProgram(chosenProgramKey)
+    deleteElement(chosenKey)
     exitModal()
   }
 

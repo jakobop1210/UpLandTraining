@@ -15,7 +15,6 @@ export default function ProgramView(props) {
         navigation.navigate("ProgramScreen", {
           name: props.programName,
           key: props.programKey,
-          workoutsList: props.workouts
         })
       }}
       style={({ pressed }) => [

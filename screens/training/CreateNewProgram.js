@@ -26,14 +26,12 @@ export default function CreateProgramScreen() {
     }
     const db = getDatabase();
     const user = getAuth().currentUser;
-
     const programRef = push(ref(db, 'trainingPrograms/' + user.uid), {
       programName: programName,
       programDescription: programDescription,
     });
-    workoutInput.forEach((workout, index) => {
+    workoutInput.forEach((workout) => {
       push(ref(db, 'workouts/' + programRef.key), {
-        workoutNr: index,
         workoutName: workout
       });
     })
@@ -41,12 +39,6 @@ export default function CreateProgramScreen() {
     navigation.goBack();
   }
 
-  function updateHeaderEditable() {
-    setHeaderEditable(true);
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }
 
   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
@@ -64,7 +56,6 @@ export default function CreateProgramScreen() {
         />
         <IconButton
           iconName="edit"
-          onClick={updateHeaderEditable}
           iconSize={30}
           iconColor="#F0EBD8"
           iconType="AntDesign"
