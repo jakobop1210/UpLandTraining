@@ -30,7 +30,7 @@ export default function ProgramView(props) {
         {props.editMode &&
           <View style={styles.deleteButtonView}>
             <IconButton
-              onClick={props.deleteProgramWithKey}
+              onClick={deleteProgramWithKey}
               iconName="delete-outline"
               iconType="MaterialIcons"
               iconSize={30}

@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     marginBottom: 10
-},
-workoutsScrollView: {
+  },
+  workoutsScrollView: {
     flex: 1,
     flexDirection: "column",
-}
+  }
 });

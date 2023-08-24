@@ -28,7 +28,7 @@ export default function ProgramView({ workoutName, editMode, clickDelete, workou
         {editMode &&
           <View style={styles.deleteButtonView}>
             <IconButton
-              onClick={deleteProgramWithKey}
+              onClick={deleteWorkoutWithKey}
               iconName="delete-outline"
               iconType="MaterialIcons"
               iconSize={30}

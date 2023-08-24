@@ -12,7 +12,6 @@ import IconButton from '../../buttons/IconButton';
 
 export default function CreateProgramScreen() {
   const [programName, setProgramName] = useState('New Program');
-  const [headerEditable, setHeaderEditable] = useState(false);
   const inputRef = useRef(null);
   const [programDescription, setProgramDescription] = useState('');
   const navigation = useNavigation();
@@ -28,11 +27,16 @@ export default function CreateProgramScreen() {
     const db = getDatabase();
     const user = getAuth().currentUser;
 
-    push(ref(db, 'trainingPrograms/' + user.uid), {
+    const programRef = push(ref(db, 'trainingPrograms/' + user.uid), {
       programName: programName,
       programDescription: programDescription,
-      workouts: workoutInput
     });
+    workoutInput.forEach((workout, index) => {
+      push(ref(db, 'workouts/' + programRef.key), {
+        workoutNr: index,
+        workoutName: workout
+      });
+    })
     alert(`Program "${programName}" created`);
     navigation.goBack();
   }
@@ -55,7 +59,6 @@ export default function CreateProgramScreen() {
           autoCapitalize="none"
           onChangeText={setProgramName}
           value={programName}
-          editable={true}
           style={styles.programNameInput}
           maxLength={25}
         />
@@ -77,11 +80,14 @@ export default function CreateProgramScreen() {
         value={programDescription}
         style={styles.inputArea}
       />
-      <DynamicInput
-        labelText="Day"
-        placeholderText="Workout name"
-        createProgram={createProgram}
-      />
+      <View style={styles.inputsView}>
+        <DynamicInput
+          labelText="Day"
+          placeholderText="Workout name"
+          onClickCreate={createProgram}
+          buttonText="Create program"
+        />
+      </View>
     </LinearGradient>
   )
 }
@@ -121,5 +127,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     marginTop: 50
+  },
+  inputsView: {
+    backgroundColor: "#1D2D44",
+    marginTop: 60,
+    paddingTop: 20,
+    width: "100%",
+    height: "100%",
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    alignItems: "center"
   }
 });

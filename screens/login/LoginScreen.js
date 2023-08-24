@@ -14,10 +14,7 @@ export default function LoginScreen() {
   }
 
   return (
-    <LinearGradient
-      colors={['#0D1321', '#1D2D44']} // Define your desired start and end colors
-      style={styles.linear}
-    >
+    <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.linear}>
       {chooseRegister 
         ? <RegisterOption changeToLogin={changeChoosenScreen} />
         : <LoginOption changeToSignup={changeChoosenScreen} />

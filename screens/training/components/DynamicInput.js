@@ -5,7 +5,7 @@ import { StyleSheet, View, Text, TextInput, ScrollView, Input } from 'react-nati
 import TextAndIconButton from '../../../buttons/TextAndIconButton';
 import PurpleFadedButton from '../../../buttons/PurpleFadedButton';
 
-export default function DynamicInput({ labelText, placeholderText, createProgram }) {
+export default function DynamicInput({ labelText, placeholderText, onClickCreate, buttonText }) {
   const [loading, setLoading] = useState(false);
   const [valuesList, setValuesList] = useState(['']);
   const [inputFields, setInputFields] = useState([
@@ -21,8 +21,8 @@ export default function DynamicInput({ labelText, placeholderText, createProgram
     }
   ]);
 
-  function callCeateProgram() {
-    createProgram(valuesList)
+  function callCeate() {
+    onClickCreate(valuesList)
   }
 
   function addInput() {
@@ -67,31 +67,27 @@ export default function DynamicInput({ labelText, placeholderText, createProgram
         <TextAndIconButton onClick={addInput} iconName="add" title="Add" iconSize={25} />
         <TextAndIconButton onClick={removeInput} title="Remove" iconName="remove" iconSize={25} />
       </View>
-      <View style={styles.inputsView}>
-        <View style={styles.scrollViewContainer}>
-          <ScrollView>
-            {inputFields.map((element, index) => (
-              <View key={index} style={styles.inputContainer}>
-                {element.inputLabel}
-                {element.textInput}
-              </View>
-            ))}
-          </ScrollView>
-        </View>
+      <View style={styles.scrollViewContainer}>
+        <ScrollView>
+          {inputFields.map((element, index) => (
+            <View key={index} style={styles.inputContainer}>
+              {element.inputLabel}
+              {element.textInput}
+            </View>
+          ))}
+        </ScrollView>
       </View>
-      <View style={styles.createProgramButtonView}>
-        {loading
-          ? <ActivityIndicator size="large" color="#F0EBD8" />
-          : <PurpleFadedButton
-              title="Create Program"
-              onClick={callCeateProgram}
-              buttonWidth="60%"
-              buttonHeight={50}
-              startGradient={[0, 0]}
-              endGradient={[1, 0]}
-            />
-        }
-      </View>
+      {loading
+        ? <ActivityIndicator size="large" color="#F0EBD8" />
+        : <PurpleFadedButton
+            title={buttonText}
+            onClick={callCeate}
+            buttonWidth="60%"
+            buttonHeight={50}
+            startGradient={[0, 0]}
+            endGradient={[1, 0]}
+          />
+      }
     </>
   );
 }
@@ -99,26 +95,19 @@ export default function DynamicInput({ labelText, placeholderText, createProgram
 const styles = StyleSheet.create({
   addRemoveButtonContainer: {
     flexDirection: "row",
-    marginTop: 30,
-    width: "60%",
+    width: "70%",
     justifyContent: "space-evenly"
-  },
-  inputsView: {
-    width: "100%",
-    marginTop: 20,
-    height: 500,
-    backgroundColor: "#1D2D44",
-    paddingLeft: 40,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30
   },
   scrollViewContainer: {
     height: 270,
+    marginBottom: 20
   },
   inputContainer: {
-    marginTop: 30,
+    marginTop: 10,
+    marginBottom: 20,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    width: "100%"
   },
   inputLabel: {
     color: "#F0EBD8",
@@ -126,18 +115,12 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   input: {
-    width: "60%",
+    width: "70%",
     height: 40,
     paddingHorizontal: 10,
     fontSize: 18,
     color: "#F0EBD8",
     borderColor: 'gray',
     borderBottomWidth: 1,
-  },
-  createProgramButtonView: {
-    position: "absolute",
-    bottom: 20,
-    width: "100%",
-    alignItems: "center"
   }
 });
