@@ -2,8 +2,9 @@ import { Pressable } from 'react-native';
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 
 export default function IconButton({ onClick, iconName, iconType, iconSize, iconColor }) {
-  let selectedIcon = <Ionicons name={iconName} size={iconSize} color={iconColor} />;
 
+  // Define the selected icon based on the specified iconType
+  let selectedIcon = <Ionicons name={iconName} size={iconSize} color={iconColor} />;
   if (iconType === 'MaterialIcons') {
     selectedIcon = <MaterialIcons name={iconName} size={iconSize} color={iconColor} />;
   } else if (iconType === 'AntDesign') {

@@ -1,12 +1,10 @@
-import { StyleSheet, View, Text, TextInput } from 'react-native'
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 import { ActivityIndicator } from 'react-native-paper';
-import { updateProfile, updateEmail, updatePassword } from 'firebase/auth'; 
-import { auth } from '../../firebaseAuth'
-import { useState, useRef } from 'react'
-
-// Components
+import { updateProfile, updateEmail, updatePassword } from 'firebase/auth';
+import { auth } from '../../firebaseAuth';
 import InputWithIcon from '../login/components/InputWithIcon';
 import GoBackButton from '../../buttons/GoBackButton';
 import PurpleFadedButton from '../../buttons/PurpleFadedButton';
@@ -22,24 +20,28 @@ export default function EditProfile() {
   const confirmPasswordRef = useRef();
   const [loading, setLoading] = useState('');
 
+  // Function to update profile information
   const updateProfileInformation = async () => {
     setLoading(true);
     if (password !== confirmPassword) {
-      alert("The passwords dont match!")
+      alert("The passwords don't match!");
       setLoading(false);
       return;
     }
     try {
+      // Update user's display name
       await updateProfile(loggedInUser, { displayName: name });
+      // Update user's email address
       await updateEmail(loggedInUser, email);
+      // Update user's password
       await updatePassword(loggedInUser, password);
       setLoading(false);
       alert("Profile information updated successfully!");
     } catch (error) {
-      alert(error.message); 
-      setLoading(false); 
+      alert(error.message);
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
@@ -62,7 +64,7 @@ export default function EditProfile() {
           value={email}
           onChange={setEmail}
           inputRef={emailRef}
-          placeholder="Email Adress"
+          placeholder="Email Address"
           iconName="ios-mail-outline"
         />
         <InputWithIcon
@@ -94,7 +96,7 @@ export default function EditProfile() {
         </View>
       </View>
     </LinearGradient>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

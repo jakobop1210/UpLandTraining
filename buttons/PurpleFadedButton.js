@@ -2,6 +2,7 @@ import { StyleSheet, Text, Pressable, Image, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function PurpleFadedButton({ onClick, title, buttonWidth, buttonHeight, iconImage, startGradient, endGradient }) {
+  
   return (
     <Pressable
       onPress={onClick}

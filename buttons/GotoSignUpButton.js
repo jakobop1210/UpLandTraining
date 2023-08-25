@@ -1,6 +1,7 @@
 import { StyleSheet, Pressable, Text } from 'react-native'
 
 export default function GotoSignUpButton({ onClick, title }) {
+  
   return (
     <Pressable 
       onPress={onClick}
