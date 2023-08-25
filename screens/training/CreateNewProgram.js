@@ -1,9 +1,9 @@
-import { StyleSheet, View, Text, TextInput } from 'react-native'
-import { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import { getDatabase, ref, push } from "firebase/database";
-import { getAuth } from "firebase/auth";
+import { getDatabase, ref, push } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
 // Components
 import GoBackButton from '../../buttons/GoBackButton';
@@ -12,33 +12,40 @@ import IconButton from '../../buttons/IconButton';
 
 export default function CreateProgramScreen() {
   const [programName, setProgramName] = useState('New Program');
-  const inputRef = useRef(null);
   const [programDescription, setProgramDescription] = useState('');
+  const inputRef = useRef(null);
   const navigation = useNavigation();
 
+  // Function to create a new program
   function createProgram(workoutInput) {
     if (programName === '') {
-      alert("Program name cannot be empty");
+      alert('Program name cannot be empty');
       return;
     } else if (workoutInput.includes('')) {
-      alert("You have to give every workout a name");
+      alert('You have to give every workout a name');
       return;
     }
+
     const db = getDatabase();
     const user = getAuth().currentUser;
-    const programRef = push(ref(db, 'trainingPrograms/' + user.uid), {
+
+    // Create a new program
+    const programRef = push(ref(db, `trainingPrograms/${user.uid}`), {
       programName: programName,
       programDescription: programDescription,
     });
+
+    // Create workouts associated with the program
     workoutInput.forEach((workout) => {
-      push(ref(db, 'workouts/' + programRef.key), {
-        workoutName: workout
+      push(ref(db, `workouts/${programRef.key}`), {
+        workoutName: workout,
       });
-    })
+    });
+
+    // Display a success message and navigate back
     alert(`Program "${programName}" created`);
     navigation.goBack();
-  }
-
+  };
 
   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
@@ -80,53 +87,53 @@ export default function CreateProgramScreen() {
         />
       </View>
     </LinearGradient>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    position: "relative",
+    flexDirection: 'column',
+    position: 'relative',
     alignItems: 'center',
   },
   programNameInputView: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 80,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%"
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   goBackButtonView: {
-    position: "absolute",
-    left: 0
+    position: 'absolute',
+    left: 0,
   },
   programNameInput: {
     height: 40,
-    color: "#F0EBD8",
+    color: '#F0EBD8',
     fontSize: 25,
-    textAlign: "center",
-    marginRight: 10
+    textAlign: 'center',
+    marginRight: 10,
   },
   inputArea: {
-    width: "75%",
+    width: '75%',
     height: 100,
     paddingHorizontal: 10,
-    color: "#F0EBD8",
+    color: '#F0EBD8',
     fontSize: 16,
     borderColor: '#888',
     borderWidth: 1,
     borderRadius: 10,
-    marginTop: 50
+    marginTop: 50,
   },
   inputsView: {
-    backgroundColor: "#1D2D44",
+    backgroundColor: '#1D2D44',
     marginTop: 60,
     paddingTop: 20,
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-    alignItems: "center"
-  }
+    alignItems: 'center',
+  },
 });

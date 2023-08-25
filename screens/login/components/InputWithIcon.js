@@ -3,6 +3,12 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function InputWithIcon({ value, onChange, inputRef, onSubmitRef, placeholder, iconName }) {
 
+  // Function to handle the "Submit" action, focusing the next input field
+  const handleSubmitEditing = () => {
+    if (onSubmitRef) {
+      onSubmitRef.current.focus();
+    }
+  };
 
   return (
     <>
@@ -18,11 +24,7 @@ export default function InputWithIcon({ value, onChange, inputRef, onSubmitRef, 
         value={value}
         secureTextEntry={iconName === "key-outline"}
         returnKeyType="next"
-        onSubmitEditing={() => {
-          if (onSubmitRef) {
-            onSubmitRef.current.focus();
-          }
-        }}
+        onSubmitEditing={handleSubmitEditing}
         style={styles.input}
       />
     </View>

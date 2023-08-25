@@ -5,6 +5,7 @@ import IconButton from '../../../buttons/IconButton';
 export default function ProgramView(props) {
   const navigation = useNavigation();
 
+  // Delete program with the chosen key
   function deleteProgramWithKey() {
     props.clickDelete(props.programKey)
   }

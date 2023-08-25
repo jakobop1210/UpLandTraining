@@ -1,66 +1,71 @@
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import { useState, useEffect } from 'react'
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, remove } from 'firebase/database';
+import { useNavigation } from '@react-navigation/native';
 
-//Components
+// Components
 import Header from '../../Header';
 import ProgramView from './components/ProgramView';
 import TextAndIconButton from '../../buttons/TextAndIconButton';
-import AreYouSureModal from './components/AreYouSureModal';
+import AreYouSureModal from './components/modals/AreYouSureModal';
 
 export default function TrainingScreen() {
   const [editMode, setEditMode] = useState(false);
   const [userPrograms, setUserPrograms] = useState([]);
   const [programKeys, setProgramKeys] = useState([]);
+  const [areYouSureModal, setAreYouSureModal] = useState(null);
   const currentUser = getAuth().currentUser;
   const navigation = useNavigation();
-  const [areYouSureModal, setAreYouSureModal] = useState(null)
 
-  // Fetch the training programs for the logged in user
+  // Fetch the training programs for the logged-in user
   useEffect(() => {
     const db = getDatabase();
-    const starCountRef = ref(db, 'trainingPrograms/' + currentUser.uid);
-    onValue(starCountRef, (snapshot) => {
+    const userProgramsRef = ref(db, `trainingPrograms/${currentUser.uid}`);
+    
+    onValue(userProgramsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        setUserPrograms(Object.values(data))
-        setProgramKeys(Object.keys(data))
+        const programs = Object.values(data);
+        const keys = Object.keys(data);
+        setUserPrograms(programs);
+        setProgramKeys(keys);
       } else {
         setUserPrograms([]);
-        setProgramKeys([])
-      } (error) => {
-        console.error("Error fetching programs:", error);
-      };
+        setProgramKeys([]);
+      }
+    }, (error) => {
+      console.error("Error fetching programs:", error);
     });
   }, []);
 
-  // Delete program with programKey, including belonging workouts and exercises
+  // Delete a program with its key, including associated workouts and exercises
   function deleteProgram(programKey) {
     const db = getDatabase();
+    
     remove(ref(db, `trainingPrograms/${currentUser.uid}/${programKey}`))
-    .catch((error) => {
-      console.error('Error deleting program:', error);
-    });
+      .catch((error) => {
+        console.error('Error deleting program:', error);
+      });
+
     remove(ref(db, `workouts/${programKey}`))
-    .catch((error) => {
-      console.error('Error deleting workouts:', error);
-    });
+      .catch((error) => {
+        console.error('Error deleting workouts:', error);
+      });
   }
 
-  // Set editmode to be the opposite of its current value
+  // Toggle edit mode
   function updateEditMode() {
-    setEditMode(!editMode)
+    setEditMode(!editMode);
   }
 
-  // Navigates to CreateNewProgram screen
+  // Navigate to CreateNewProgram screen
   function goToCreateNewProgram() {
-    navigation.navigate("CreateNewProgram")
+    navigation.navigate("CreateNewProgram");
   }
 
-  // Set areYouSureModal so it becomes visible
+  // Show the confirmation modal for deleting a program
   function showModal(programKey) {
     if (programKey) {
       setAreYouSureModal(
@@ -69,13 +74,13 @@ export default function TrainingScreen() {
           chosenKey={programKey}
           deleteElement={deleteProgram}
         />
-      )
+      );
     }
   }
 
-  // Exit modal by setting it to null
+  // Close the confirmation modal
   function exitModal() {
-    setAreYouSureModal(null)
+    setAreYouSureModal(null);
   }
 
   return (
@@ -83,12 +88,13 @@ export default function TrainingScreen() {
       <Header title="My programs" onClickEdit={updateEditMode} showEditButton={true}/>
       <View style={styles.programsView}>
         <ScrollView style={styles.programsScrollView}>
-        {userPrograms.length === 0 
-          ? <Text style={styles.noProgramText}>
+          {userPrograms.length === 0 ? (
+            <Text style={styles.noProgramText}>
               You have not created any programs yet. Get started 
               by clicking the "Create new Program" button below!
             </Text>
-          : userPrograms.map((program, index) => (
+          ) : (
+            userPrograms.map((program, index) => (
               <ProgramView
                 key={index}
                 programName={program.programName}
@@ -97,45 +103,46 @@ export default function TrainingScreen() {
                 clickDelete={showModal}
                 programKey={programKeys[index]}
               />
-            )
-        )}
+            ))
+          )}
         </ScrollView>
       </View>
-        {editMode 
-          ? <TextAndIconButton 
-              onClick={updateEditMode} 
-              title="Done editing" 
-              iconName="done"
-              iconSize={25}
-            />
-          : <TextAndIconButton 
-              onClick={goToCreateNewProgram} 
-              title="Create new Program" 
-              iconName="add"
-              iconSize={25}
-            />
-        }
-        {areYouSureModal}
+      {editMode ? (
+        <TextAndIconButton 
+          onClick={updateEditMode} 
+          title="Done editing" 
+          iconName="done"
+          iconSize={25}
+        />
+      ) : (
+        <TextAndIconButton 
+          onClick={goToCreateNewProgram} 
+          title="Create new Program" 
+          iconName="add"
+          iconSize={25}
+        />
+      )}
+      {areYouSureModal}
     </LinearGradient>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      flexDirection: "column",
-      position: "relative",
-      alignItems: 'center',
+    flex: 1,
+    flexDirection: "column",
+    position: "relative",
+    alignItems: 'center',
   },
   programsView: {
-      height: 560,
-      width: "100%",
-      alignItems: "center",
-      marginBottom: 10
+    height: 560,
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 10
   },
   programsScrollView: {
-      flex: 1,
-      flexDirection: "column",
+    flex: 1,
+    flexDirection: "column",
   },
   noProgramText: {
     color: "#666666",

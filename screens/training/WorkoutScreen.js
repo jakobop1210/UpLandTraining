@@ -6,9 +6,9 @@ import { getDatabase, ref, onValue, remove } from 'firebase/database';
 // Components
 import Header from '../../Header';
 import ExerciseView from './components/ExerciseView';
-import CreateExerciseModal from './components/CreateExerciseModal';
+import ExerciseModal from './components/modals/ExerciseModal';
+import AreYouSureModal from './components/modals/AreYouSureModal';
 import TextAndIconButton from '../../buttons/TextAndIconButton';
-import AreYouSureModal from './components/AreYouSureModal';
 
 export default function ProgramScreen({ route }) {
   const workoutName = route.params.name;
@@ -16,7 +16,7 @@ export default function ProgramScreen({ route }) {
   const programKey = route.params.programKey;
   const [exercises, setExercises] = useState([]);
   const [exerciseKeys, setExerciseKeys] = useState([])
-  const [createExerciseModal, setCreateExerciseModal] = useState(null);
+  const [exerciseModal, setExerciseModal] = useState(null);
   const [areYouSureModal, setAreYouSureModal] = useState(null)
   const [editMode, setEditMode] = useState(false);
 
@@ -30,9 +30,6 @@ export default function ProgramScreen({ route }) {
       if (data) {
         setExercises(Object.values(data));
         setExerciseKeys(Object.keys(data));
-      } else {
-        setExercises([]);
-        setExerciseKeys([])
       } (error) => {
         console.error("Error fetching exercises:", error);
       };
@@ -54,11 +51,26 @@ export default function ProgramScreen({ route }) {
 
   // Set createExerciseModal so it becomes visible
   function showCreateExerciseModal() {
-    setCreateExerciseModal(
-      <CreateExerciseModal 
-        exitModal={exitCreateExerciseModal}
+    setExerciseModal(
+      <ExerciseModal 
+        exitModal={exitExerciseModal}
         workoutKey={workoutKey}
         programKey={programKey}
+        buttonText="Add exercise"
+        showCreateExercise={true}
+      />
+    )
+  }
+
+   // Set createExerciseModal so it becomes visible and customize it for track exercise
+   function showTrackExerciseModal(exerciseName, setsList) {
+    setExerciseModal(
+      <ExerciseModal 
+        exerciseName={exerciseName}
+        exitModal={exitExerciseModal}
+        buttonText="Track exercise"
+        showWeightTracker={true}
+        setsList={setsList}
       />
     )
   }
@@ -80,8 +92,8 @@ export default function ProgramScreen({ route }) {
     setAreYouSureModal(null)
   }
 
-  function exitCreateExerciseModal() {
-    setCreateExerciseModal(null)
+  function exitExerciseModal() {
+    setExerciseModal(null)
   }
 
   return (
@@ -97,6 +109,7 @@ export default function ProgramScreen({ route }) {
             : exercises.slice(0, -1).map((exercise, index) => (
                 <ExerciseView
                   key={index}
+                  onClick={showTrackExerciseModal}
                   exerciseName={exercise.exerciseName}
                   setsList={exercise.sets}
                   editMode={editMode}
@@ -113,7 +126,7 @@ export default function ProgramScreen({ route }) {
         iconName="add"
         iconSize={25}
       />
-      {createExerciseModal}
+      {exerciseModal}
       {areYouSureModal}
     </LinearGradient>
   )

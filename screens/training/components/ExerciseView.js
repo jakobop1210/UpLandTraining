@@ -1,16 +1,25 @@
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import IconButton from '../../../buttons/IconButton';
+import { useEffect } from 'react';
 
-export default function ExerciseView({ exerciseName, setsList, exerciseKey, editMode, clickDelete, trackWeight }) {
+// Components
+
+
+export default function ExerciseView({ exerciseName, onClick, setsList, exerciseKey, editMode, clickDelete }) {
   
-
+  // Delete workout with the chosen key
   function deleteWorkoutWithKey() {
     clickDelete(exerciseKey)
   }
 
+  // Show tack exercise modal with the chosen name and sets
+  function trackExercice() {
+    onClick(exerciseName, setsList)
+  }
+  
   return (
     <Pressable
-      onClick={trackWeight}
+      onPress={trackExercice}
       style={({ pressed }) => [
         {
           opacity: pressed
@@ -35,7 +44,7 @@ export default function ExerciseView({ exerciseName, setsList, exerciseKey, edit
         <View style={styles.setsListView}>
           <Text style={styles.setText}>{setsList.length} total set:  </Text>
           {setsList.map((set, index) => (
-            <Text style={styles.setText}>
+            <Text key={index} style={styles.setText}>
               {index != setsList.length-1 ? `${set}reps, ` : `${set}reps`}
             </Text>
           ))}

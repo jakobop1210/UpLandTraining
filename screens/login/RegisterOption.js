@@ -1,5 +1,5 @@
-import { StyleSheet, TextInput, View, Text } from 'react-native';
 import React, { useState, useRef } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { auth } from '../../firebaseAuth';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -18,8 +18,9 @@ export default function RegisterOption({ changeToLogin }) {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState(false);
 
+  // Register user with email and password
   const handleRegister = async () => {
     setLoading(true);
     try {
@@ -48,6 +49,7 @@ export default function RegisterOption({ changeToLogin }) {
     <View style={styles.registerView}>
       <Text style={styles.registerHeader}>Create Account</Text>
       <Text style={styles.registerInformationText}>Please fill in the information below</Text>
+      {/* Full Name */}
       <InputWithIcon 
         value={name}
         onChange={setName}
@@ -55,14 +57,16 @@ export default function RegisterOption({ changeToLogin }) {
         placeholder="Full Name"
         iconName="person-outline"
       />
+      {/* Email */}
       <InputWithIcon 
         value={email}
         onChange={setEmail}
         inputRef={emailRef}
         onSubmitRef={passwordRef}
-        placeholder="Email Adress"
+        placeholder="Email Address"
         iconName="ios-mail-outline"
       />
+      {/* Password */}
       <InputWithIcon
         value={password}
         onChange={setPassword}
@@ -71,11 +75,12 @@ export default function RegisterOption({ changeToLogin }) {
         placeholder="Password"
         iconName="key-outline"
       />
+      {/* Confirm Password */}
       <InputWithIcon
         value={confirmPassword}
         onChange={setConfirmPassword}
         inputRef={confirmPasswordRef}
-        placeholder="Password"
+        placeholder="Confirm Password"
         iconName="key-outline"
       />
       <View style={styles.registerButtonView}>

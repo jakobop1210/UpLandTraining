@@ -9,6 +9,7 @@ import RegisterOption from './RegisterOption';
 export default function LoginScreen() {
   const [chooseRegister, setChooseRegister] = useState(false);
 
+  // Change between login and register screen
   function changeChoosenScreen() {
     setChooseRegister(!chooseRegister);
   }

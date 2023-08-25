@@ -5,6 +5,7 @@ import IconButton from '../../../buttons/IconButton';
 export default function WorkoutView({ workoutName, editMode, clickDelete, workoutKey, programKey }) {
   const navigation = useNavigation();
 
+  // Delete workout with the chosen key
   function deleteWorkoutWithKey() {
     clickDelete(workoutKey)
   }

@@ -1,30 +1,27 @@
 import { StyleSheet, Modal, View, Text, Dimensions, TextInput } from 'react-native';
 import { useState } from 'react';
 import { getDatabase, ref, push } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
 // Components
-import DynamicInput from './DynamicInput';
-import IconButton from '../../../buttons/IconButton';
+import PurpleFadedButton from '../../../../buttons/PurpleFadedButton';
+import IconButton from '../../../../buttons/IconButton';
 
-export default function CreateExerciseModal({ exitModal, workoutKey, programKey }) {
-  const [exerciseName, setExerciseName] = useState('');
+export default function CreateWorkoutModal({ exitModal, programKey }) {
+  const [workoutName, setWorkoutName] = useState('');
 
-
-  // Add exercise to database to workouts/programkey/workoutkey
-  function addExercise(repsList) {
-    if (exerciseName === '') {
-      alert("Program name cannot be empty");
-      return;
-    } else if (repsList.includes('')) {
-      alert("Every set must have a rep count");
+  // Add workout to database to workouts/programkey
+  function addWorkout() {
+    if (workoutName === '') {
+      alert("Workout name cannot be empty");
       return;
     }
     const db = getDatabase();
-    push(ref(db, `workouts/${programKey}/${workoutKey}`), {
-      exerciseName: exerciseName,
-      sets: repsList
+    const user = getAuth().currentUser;
+    push(ref(db, 'workouts/' + programKey), {
+      workoutName: workoutName
     });
-    alert(`Exercise "${exerciseName}" created`);
+    alert(`Workout "${workoutName}" created`);
     exitModal()
   }
 
@@ -43,18 +40,20 @@ export default function CreateExerciseModal({ exitModal, workoutKey, programKey 
           </View>
           <TextInput
             autoCapitalize="none"
-            placeholder="Exercise name"
+            placeholder="Workout name"
             placeholderTextColor="#888"
-            onChangeText={setExerciseName}
-            value={exerciseName}
-            style={styles.exerciseNameInput}
-            maxLength={35}
+            onChangeText={setWorkoutName}
+            value={workoutName}
+            style={styles.workoutNameInput}
+            maxLength={25}
           />
-          <DynamicInput
-            labelText="Set"
-            placeholderText="reps"
-            onClickCreate={addExercise}
-            buttonText="Add exercise"
+          <PurpleFadedButton
+            title="Create Workout"
+            onClick={addWorkout}
+            buttonWidth="60%"
+            buttonHeight={50}
+            startGradient={[0, 0]}
+            endGradient={[1, 0]}
           />
         </View>
       </View>
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
   contentView: {
     flexDirection: "column",
     alignItems: "center",
-    height: 520,
+    height: 200,
     width: 320,
     backgroundColor: "#1D2D44",
     padding: 20,
@@ -101,13 +100,13 @@ const styles = StyleSheet.create({
     top: 5,
     right: 10
   },
-  exerciseNameInput: {
+  workoutNameInput: {
     height: 45,
     width: "80%",
     color: "#F0EBD8",
     fontSize: 22,
     marginRight: 10,
-    marginBottom: 30,
+    marginBottom: 50,
     paddingHorizontal: 10,
     borderBottomColor: "#CCC",
     borderBottomWidth: 1
