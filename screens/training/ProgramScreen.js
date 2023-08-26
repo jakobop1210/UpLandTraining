@@ -99,10 +99,11 @@ export default function ProgramScreen({ route }) {
                 <WorkoutView
                   key={workoutKey}
                   workoutKey={workoutKey}
+                  programKey={programKey}
                   workoutName={programWorkouts[workoutKey].workoutName}
+                  exercises={programWorkouts[workoutKey].exercises}
                   clickDelete={showAreYouSureModal}
                   editMode={editMode}
-                  programKey={programKey}
                 />
              ))
             : <Text style={styles.noWorkoutsText}>
@@ -139,6 +140,7 @@ const styles = StyleSheet.create({
   },
   workoutsScrollView: {
     flex: 1,
+    width: '90%',
     flexDirection: "column",
   },
   noWorkoutsText: {

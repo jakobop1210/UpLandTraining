@@ -1,6 +1,6 @@
 import { StyleSheet, Modal, View, Text, Dimensions, TextInput } from 'react-native';
 import { useState } from 'react';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, push } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 
 // Components

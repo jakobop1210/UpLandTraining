@@ -12,6 +12,10 @@
                 "exerciseId": {
                   "name": "Exercise name",
                   "sets": ["10", "10"]
+                },
+                "exerciseId2": {
+                  "name": "Exercise name",
+                  "sets": ["10", "10"]
                 }
               }
             }

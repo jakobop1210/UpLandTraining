@@ -1,13 +1,24 @@
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
+
+// Components
 import IconButton from '../../../buttons/IconButton';
 
-export default function WorkoutView({ workoutName, editMode, updateEditMode, clickDelete, workoutKey, programKey }) {
+export default function WorkoutView({ workoutName, editMode, updateEditMode, clickDelete, workoutKey, programKey, exercises }) {
   const navigation = useNavigation();
 
   // Delete workout with the chosen key
   function deleteWorkoutWithKey() {
     clickDelete(workoutKey)
+  }
+
+  function getTotalSets() {
+    let totalSets = 0;
+    Object.keys(exercises).forEach((exerciseKey) => {
+      totalSets += exercises[exerciseKey].sets.length;
+    });
+    return totalSets;
   }
 
   return (
@@ -40,10 +51,24 @@ export default function WorkoutView({ workoutName, editMode, updateEditMode, cli
             />
           </View>
         }
+        <MaterialIcons 
+          name="keyboard-arrow-right" 
+          size={40} color="#F0EBD8" 
+          style={{ position: "absolute", right: 10, top: 22 }} 
+        />
         <Text style={styles.workoutName}>{workoutName}</Text>
-        <ScrollView>
-          
-        </ScrollView>
+        <View style={styles.workoutInfoView}>
+          <FontAwesome5
+            name="dumbbell" 
+            size={15} color="#F0EBD8" 
+          />
+          <Text style={styles.workoutInfoText}>{Object.keys(exercises).length} exercises</Text>
+          <MaterialIcons
+            name="timer" 
+            size={18} color="#F0EBD8" 
+          />
+          <Text style={styles.workoutInfoText}>{getTotalSets()*5} minutes</Text>
+        </View>
       </View>
     </Pressable>
   );
@@ -52,7 +77,7 @@ export default function WorkoutView({ workoutName, editMode, updateEditMode, cli
 const styles = StyleSheet.create({
   workoutDescriptionView: {
     position: "relative",
-    width: 340,
+    width: "100%",
     backgroundColor: "#3E5C76",
     height: 90,
     borderRadius: 10,
@@ -62,15 +87,22 @@ const styles = StyleSheet.create({
   },
   workoutName: {
     color: "#F0EBD8",
-    fontSize: 23,
-    fontWeight: "600",
+    fontSize: 25,
+    fontWeight: "500",
     marginBottom: 8,
     width: "90%"
+  },
+  workoutInfoView: {
+    flexDirection: "row",
+  },
+  workoutInfoText: {
+    color: "#F0EBD8",
+    marginLeft: 5,
+    marginRight: 10
   },
   deleteButtonView: {
     position: "absolute",
     top: 10,
     right: 5,
-    zIndex: 1000
   }
 });
