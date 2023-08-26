@@ -43,7 +43,11 @@ export default function DynamicInput(props) {
     // Extract text and weight values from input fields
     const textValuesList = inputFields.map((field) => field.text);
     const weightValuesList = inputFields.map((field) => field.weight);
-    props.onClickCreate(textValuesList);
+    if (props.showWeightInput) {
+      props.onClickCreate(textValuesList, weightValuesList);
+    } else {
+      props.onClickCreate(textValuesList);
+    }
   }
 
   // Function to handle text input changes

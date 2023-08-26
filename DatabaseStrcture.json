@@ -19,14 +19,12 @@
         }
       },
       "exerciseHistory": {
-        "userId": {
-          "exerciseName": {
-            "date": [
-              {"weight": "100", "reps": "10"},
-              {"weight": "110", "reps": "12"},
-              {"weight": "95", "reps": "8"}
-            ]
-          }
+        "exerciseName": {
+          "date": [
+            {"weight": "100", "reps": "10"},
+            {"weight": "110", "reps": "12"},
+            {"weight": "95", "reps": "8"}
+          ]
         }
       }
     }

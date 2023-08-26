@@ -1,6 +1,6 @@
 import { StyleSheet, Modal, View, Text, Dimensions, TextInput } from 'react-native';
 import { useState } from 'react';
-import { getDatabase, ref, push } from 'firebase/database';
+import { getDatabase, ref, set } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 
 // Components
@@ -27,6 +27,32 @@ export default function ExerciseModal(props) {
       sets: repsList
     });
     alert(`Exercise "${newExerciseName}" created`);
+    props.exitModal()
+  }
+
+  // Track exercise with amount of reps and weight lifted
+  function trackExercise(repsList, weightList) {
+    if (repsList.includes('')) {
+      alert("Every set must have a rep count");
+      return;
+    } else if (weightList.includes(null)) {
+      alert("Every set must have a weight value");
+      return;
+    }
+
+    const db = getDatabase();
+    const currentUser = getAuth().currentUser;
+    const date = new Date();
+    const modifiedExerciseName = props.exerciseName.toLowerCase().replace(/\s/g, '');
+    const sets = repsList.map((reps, index) => ({
+      weight: weightList[index],
+      reps: reps,
+    }));
+
+    set(ref(db, `users/${currentUser.uid}/exerciseHistory/${modifiedExerciseName}/${date}`), {
+      sets: sets
+    });
+    alert(`Exercise "${props.exerciseName}" tracked`);
     props.exitModal()
   }
 
@@ -66,7 +92,7 @@ export default function ExerciseModal(props) {
               <DynamicInput
                 labelText="Set"
                 placeholderText="reps"
-                onClickCreate={addExercise}
+                onClickCreate={props.showCreateExercise ? addExercise : trackExercise}
                 showWeightInput={true}
                 buttonText={props.buttonText}
                 inputLength={props.setsList.length}
