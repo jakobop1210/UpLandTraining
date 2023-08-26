@@ -11,10 +11,10 @@ import ProgramView from './components/ProgramView';
 import TextAndIconButton from '../../buttons/TextAndIconButton';
 import AreYouSureModal from './components/modals/AreYouSureModal';
 
+
 export default function TrainingScreen() {
   const [editMode, setEditMode] = useState(false);
-  const [userPrograms, setUserPrograms] = useState([]);
-  const [programKeys, setProgramKeys] = useState([]);
+  const [userPrograms, setUserPrograms] = useState({});
   const [areYouSureModal, setAreYouSureModal] = useState(null);
   const currentUser = getAuth().currentUser;
   const navigation = useNavigation();
@@ -22,18 +22,13 @@ export default function TrainingScreen() {
   // Fetch the training programs for the logged-in user
   useEffect(() => {
     const db = getDatabase();
-    const userProgramsRef = ref(db, `trainingPrograms/${currentUser.uid}`);
-    
+    const userProgramsRef = ref(db, `users/${currentUser.uid}/trainingPrograms`);
     onValue(userProgramsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        const programs = Object.values(data);
-        const keys = Object.keys(data);
-        setUserPrograms(programs);
-        setProgramKeys(keys);
+        setUserPrograms(data);
       } else {
-        setUserPrograms([]);
-        setProgramKeys([]);
+        setUserPrograms({});
       }
     }, (error) => {
       console.error("Error fetching programs:", error);
@@ -43,15 +38,9 @@ export default function TrainingScreen() {
   // Delete a program with its key, including associated workouts and exercises
   function deleteProgram(programKey) {
     const db = getDatabase();
-    
-    remove(ref(db, `trainingPrograms/${currentUser.uid}/${programKey}`))
+    remove(ref(db, `users/${currentUser.uid}/trainingPrograms/${programKey}`))
       .catch((error) => {
         console.error('Error deleting program:', error);
-      });
-
-    remove(ref(db, `workouts/${programKey}`))
-      .catch((error) => {
-        console.error('Error deleting workouts:', error);
       });
   }
 
@@ -73,8 +62,10 @@ export default function TrainingScreen() {
           exitModal={exitModal}
           chosenKey={programKey}
           deleteElement={deleteProgram}
+          whatToDelete="program"
         />
       );
+      setEditMode(false);
     }
   }
 
@@ -83,45 +74,36 @@ export default function TrainingScreen() {
     setAreYouSureModal(null);
   }
 
-  return (
+   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
       <Header title="My programs" onClickEdit={updateEditMode} showEditButton={true}/>
       <View style={styles.programsView}>
         <ScrollView style={styles.programsScrollView}>
-          {userPrograms.length === 0 ? (
-            <Text style={styles.noProgramText}>
+          {userPrograms 
+            ? Object.keys(userPrograms).map((programKey) => (
+                <ProgramView
+                  key={programKey}
+                  programKey={programKey}
+                  programName={userPrograms[programKey].programName}
+                  description={userPrograms[programKey].programDescription}
+                  editMode={editMode}
+                  clickDelete={showModal}
+                  updateEditMode={updateEditMode}
+                />
+              ))
+            : <Text style={styles.noProgramText}>
               You have not created any programs yet. Get started 
               by clicking the "Create new Program" button below!
             </Text>
-          ) : (
-            userPrograms.map((program, index) => (
-              <ProgramView
-                key={index}
-                programName={program.programName}
-                description={program.programDescription}
-                editMode={editMode}
-                clickDelete={showModal}
-                programKey={programKeys[index]}
-              />
-            ))
-          )}
+          }
         </ScrollView>
       </View>
-      {editMode ? (
-        <TextAndIconButton 
-          onClick={updateEditMode} 
-          title="Done editing" 
-          iconName="done"
-          iconSize={25}
-        />
-      ) : (
-        <TextAndIconButton 
-          onClick={goToCreateNewProgram} 
-          title="Create new Program" 
-          iconName="add"
-          iconSize={25}
-        />
-      )}
+      <TextAndIconButton 
+        onClick={goToCreateNewProgram} 
+        title="Create new Program" 
+        iconName="add"
+        iconSize={25}
+      />
       {areYouSureModal}
     </LinearGradient>
   );

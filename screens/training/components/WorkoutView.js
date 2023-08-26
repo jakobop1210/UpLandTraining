@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import IconButton from '../../../buttons/IconButton';
 
-export default function WorkoutView({ workoutName, editMode, clickDelete, workoutKey, programKey }) {
+export default function WorkoutView({ workoutName, editMode, updateEditMode, clickDelete, workoutKey, programKey }) {
   const navigation = useNavigation();
 
   // Delete workout with the chosen key
@@ -13,8 +13,9 @@ export default function WorkoutView({ workoutName, editMode, clickDelete, workou
   return (
     <Pressable
       onPress={() => {
+        {editMode && updateEditMode()}
         navigation.navigate("WorkoutScreen", {
-          name: workoutName,
+          workoutName: workoutName,
           workoutKey: workoutKey,
           programKey: programKey
         })

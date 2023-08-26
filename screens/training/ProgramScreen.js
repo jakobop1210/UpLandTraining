@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getDatabase, ref, onValue, remove } from 'firebase/database';
+import { getDatabase, ref, remove, onValue } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
 // Components
 import Header from '../../Header';
@@ -12,39 +13,34 @@ import CreateWorkoutModal from './components/modals/CreateWorkoutModal';
 
 export default function ProgramScreen({ route }) {
   const programName = route.params.name;
-  const programKey = route.params.key;
-  const [workouts, setWorkouts] = useState([]);
-  const [workoutsKeys, setWorkoutsKeys] = useState([]);
+  const programKey = route.params.programKey;
+  const currentUser = getAuth().currentUser;
+  const [programWorkouts, setProgramWorkouts] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [areYouSureModal, setAreYouSureModal] = useState(null);
   const [createWorkoutModal, setCreateWorkoutModal] = useState(null);
-
-  // Fetch all the workouts belonging to the program with key = programKey
+  
+  // Fetch the workouts for the chosen program
   useEffect(() => {
     const db = getDatabase();
-    const workoutsRef = ref(db, `workouts/${programKey}`);
-    
-    onValue(workoutsRef, (snapshot) => {
+    const userWorkoutsRef = ref(db, `users/${currentUser.uid}/trainingPrograms/${programKey}/workouts`);
+    onValue(userWorkoutsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        const workoutsData = Object.values(data);
-        const workoutsKeysData = Object.keys(data);
-        setWorkouts(workoutsData);
-        setWorkoutsKeys(workoutsKeysData);
+        setProgramWorkouts(data);
       } else {
-        setWorkouts([]);
-        setWorkoutsKeys([]);
+        setProgramWorkouts({});
       }
     }, (error) => {
-      console.error("Error fetching workouts:", error);
+      console.error("Error fetching programs:", error);
     });
   }, []);
+  
 
   // Delete a workout with a given key
   function deleteWorkout(workoutKey) {
     const db = getDatabase();
-    
-    remove(ref(db, `workouts/${programKey}/${workoutKey}`))
+    remove(ref(db, `users/${currentUser.uid}/trainingPrograms/${programKey}/workouts/${workoutKey}`))
       .catch((error) => {
         console.error('Error deleting workout:', error);
       });
@@ -67,15 +63,15 @@ export default function ProgramScreen({ route }) {
 
   // Show the modal for confirming workout deletion
   function showAreYouSureModal(workoutKey) {
-    if (workoutKey) {
       setAreYouSureModal(
         <AreYouSureModal 
           exitModal={exitAreYouSureModal}
           chosenKey={workoutKey}
           deleteElement={deleteWorkout}
+          whatToDelete="workout"
         />
       );
-    }
+      setEditMode(false);
   }
 
   // Close the confirmation modal for workout deletion
@@ -98,40 +94,30 @@ export default function ProgramScreen({ route }) {
       />
       <View style={styles.workoutsView}>
         <ScrollView style={styles.workoutsScrollView}>
-          {workouts.length === 0 ? (
-            <Text style={styles.noWorkoutsText}>
-              You have not created workouts yet. Get started 
-              by clicking the "Add workouts" button below!
-            </Text>
-          ) : (
-            workouts.map((workout, index) => (
-              <WorkoutView
-                key={index}
-                workoutName={workout.workoutName}
-                clickDelete={showAreYouSureModal}
-                editMode={editMode}
-                workoutKey={workoutsKeys[index]}
-                programKey={programKey}
-              />
-            ))
-          )}
+          {programWorkouts
+            ? Object.keys(programWorkouts).map((workoutKey) => (
+                <WorkoutView
+                  key={workoutKey}
+                  workoutKey={workoutKey}
+                  workoutName={programWorkouts[workoutKey].workoutName}
+                  clickDelete={showAreYouSureModal}
+                  editMode={editMode}
+                  programKey={programKey}
+                />
+             ))
+            : <Text style={styles.noWorkoutsText}>
+                You have not created workouts yet. Get started 
+                by clicking the "Add workouts" button below!
+              </Text>
+          }
         </ScrollView>
       </View>
-      {editMode ? (
-        <TextAndIconButton 
-          onClick={updateEditMode} 
-          title="Done editing" 
-          iconName="done"
-          iconSize={25}
-        />
-      ) : (
-        <TextAndIconButton 
-          onClick={showCreateNewWorkoutModal} 
-          title="Create new Workout"
-          iconName="add"
-          iconSize={25}
-        />
-      )}
+      <TextAndIconButton 
+        onClick={showCreateNewWorkoutModal} 
+        title="Create new Workout"
+        iconName="add"
+        iconSize={25}
+      />
       {areYouSureModal}
       {createWorkoutModal}
     </LinearGradient>

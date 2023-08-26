@@ -1,6 +1,7 @@
 import { StyleSheet, Modal, View, Text, Dimensions, TextInput } from 'react-native';
 import { useState } from 'react';
 import { getDatabase, ref, push } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
 // Components
 import DynamicInput from '../DynamicInput';
@@ -20,7 +21,8 @@ export default function ExerciseModal(props) {
       return;
     }
     const db = getDatabase();
-    push(ref(db, `workouts/${props.programKey}/${props.workoutKey}`), {
+    const currentUser = getAuth().currentUser;
+    push(ref(db, `users/${currentUser.uid}/trainingPrograms/${props.programKey}/workouts/${props.workoutKey}/exercises`), {
       exerciseName: newExerciseName,
       sets: repsList
     });

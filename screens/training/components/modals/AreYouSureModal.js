@@ -3,7 +3,7 @@ import { StyleSheet, Modal, View, Text, Dimensions } from 'react-native';
 // Components
 import TextButton from '../../../../buttons/TextButton';
 
-export default function AreYouSureModal({ exitModal, chosenKey , deleteElement }) {
+export default function AreYouSureModal({ exitModal, chosenKey , deleteElement, whatToDelete }) {
 
   // Delete the chosen elements from the database and exit the modal
   function iAmSure() {
@@ -16,8 +16,8 @@ export default function AreYouSureModal({ exitModal, chosenKey , deleteElement }
       <View style={styles.parentView}>
         <View style={styles.backDrop} />
         <View style={styles.contentView}>
-          <Text style={styles.headerText}>Delete program?</Text>
-          <Text style={styles.infoText}>Are you sure you want to delete the program? It will be deleted permanently, and cannot be restored.</Text>
+          <Text style={styles.headerText}>Delete {whatToDelete}?</Text>
+          <Text style={styles.infoText}>Are you sure you want to delete {whatToDelete}? It will be deleted permanently, and cannot be restored.</Text>
           <View style={styles.buttonsView}>
             <TextButton title="Cancel" onClick={exitModal} />
             <TextButton title="Yes, I'm sure" onClick={iAmSure} />

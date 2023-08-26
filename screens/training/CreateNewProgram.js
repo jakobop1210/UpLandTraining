@@ -28,16 +28,15 @@ export default function CreateProgramScreen() {
 
     const db = getDatabase();
     const user = getAuth().currentUser;
-
     // Create a new program
-    const programRef = push(ref(db, `trainingPrograms/${user.uid}`), {
+    const programRef = push(ref(db, `users/${user.uid}/trainingPrograms`), {
       programName: programName,
       programDescription: programDescription,
     });
 
     // Create workouts associated with the program
     workoutInput.forEach((workout) => {
-      push(ref(db, `workouts/${programRef.key}`), {
+      push(ref(db, `users/${user.uid}/trainingPrograms/${programRef.key}/workouts`), {
         workoutName: workout,
       });
     });

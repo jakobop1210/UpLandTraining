@@ -10,7 +10,7 @@ import IconButton from '../../../../buttons/IconButton';
 export default function CreateWorkoutModal({ exitModal, programKey }) {
   const [workoutName, setWorkoutName] = useState('');
 
-  // Add workout to database to workouts/programkey
+  // Add workout to database when a new workout is created
   function addWorkout() {
     if (workoutName === '') {
       alert("Workout name cannot be empty");
@@ -18,12 +18,13 @@ export default function CreateWorkoutModal({ exitModal, programKey }) {
     }
     const db = getDatabase();
     const user = getAuth().currentUser;
-    push(ref(db, 'workouts/' + programKey), {
+    push(ref(db, `users/${user.uid}/trainingPrograms/${programKey}/workouts`), {
       workoutName: workoutName
     });
     alert(`Workout "${workoutName}" created`);
     exitModal()
   }
+
 
   return (
     <Modal visible={true} animationType="fade" transparent={true}>

@@ -13,9 +13,10 @@ export default function ProgramView(props) {
   return (
     <Pressable
       onPress={() => {
+        {props.editMode && props.updateEditMode()}
         navigation.navigate("ProgramScreen", {
           name: props.programName,
-          key: props.programKey,
+          programKey: props.programKey,
         })
       }}
       style={({ pressed }) => [

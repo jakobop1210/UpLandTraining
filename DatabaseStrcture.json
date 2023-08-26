@@ -1,0 +1,34 @@
+{
+  "users": {
+    "userId": {
+      "trainingPrograms": {
+        "programId": {
+          "name": "Program name",
+          "description": "Program description",
+          "workouts": {
+            "workoutId": {
+              "name": "Workout name",
+              "exercises": {
+                "exerciseId": {
+                  "name": "Exercise name",
+                  "sets": ["10", "10"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "exerciseHistory": {
+        "userId": {
+          "exerciseName": {
+            "date": [
+              {"weight": "100", "reps": "10"},
+              {"weight": "110", "reps": "12"},
+              {"weight": "95", "reps": "8"}
+            ]
+          }
+        }
+      }
+    }
+  }
+}

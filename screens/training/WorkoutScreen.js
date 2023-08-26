@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue, remove } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
 // Components
 import Header from '../../Header';
@@ -11,11 +12,11 @@ import AreYouSureModal from './components/modals/AreYouSureModal';
 import TextAndIconButton from '../../buttons/TextAndIconButton';
 
 export default function ProgramScreen({ route }) {
-  const workoutName = route.params.name;
+  const workoutName = route.params.workoutName;
   const workoutKey = route.params.workoutKey;
   const programKey = route.params.programKey;
-  const [exercises, setExercises] = useState([]);
-  const [exerciseKeys, setExerciseKeys] = useState([])
+  const currentUser = getAuth().currentUser;
+  const [workoutExercises, setWorkoutExercises] = useState({});
   const [exerciseModal, setExerciseModal] = useState(null);
   const [areYouSureModal, setAreYouSureModal] = useState(null)
   const [editMode, setEditMode] = useState(false);
@@ -24,22 +25,23 @@ export default function ProgramScreen({ route }) {
   // Fetch exercises based on programKey and workoutKey
   useEffect(() => {
     const db = getDatabase();
-    const starCountRef = ref(db, `workouts/${programKey}/${workoutKey}`);
+    const starCountRef = ref(db, `users/${currentUser.uid}/trainingPrograms/${programKey}/workouts/${workoutKey}/exercises`);
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        setExercises(Object.values(data));
-        setExerciseKeys(Object.keys(data));
-      } (error) => {
+        setWorkoutExercises(data);
+      } else {
+        setWorkoutExercises({});
+      } 
+    }, (error) => {
         console.error("Error fetching exercises:", error);
-      };
     });
   }, []);
 
   // Delete exercise with key = exerciseKey
   function deleteExercise(exerciseKey) {
     const db = getDatabase();
-    remove(ref(db, `workouts/${programKey}/${workoutKey}/${exerciseKey}`))
+    remove(ref(db, `users/${currentUser.uid}/trainingPrograms/${programKey}/workouts/${workoutKey}/exercises/${exerciseKey}`))
     .catch((error) => {
       console.error('Error deleting workout:', error);
     });
@@ -60,6 +62,7 @@ export default function ProgramScreen({ route }) {
         showCreateExercise={true}
       />
     )
+    setEditMode(false);
   }
 
    // Set createExerciseModal so it becomes visible and customize it for track exercise
@@ -73,6 +76,7 @@ export default function ProgramScreen({ route }) {
         setsList={setsList}
       />
     )
+    setEditMode(false);
   }
 
   // Set showAreYouSureModal so it becomes visible
@@ -83,8 +87,10 @@ export default function ProgramScreen({ route }) {
           exitModal={exitAreYouSureModal}
           chosenKey={exerciseKey}
           deleteElement={deleteExercise}
+          whatToDelete="exercise"
         />
       )
+      setEditMode(false);
     }
   }
 
@@ -101,23 +107,25 @@ export default function ProgramScreen({ route }) {
       <Header title={workoutName} showGoBackButton={true} showEditButton={true} onClickEdit={updateEditMode}/>
       <View style={styles.exercisesView}>
         <ScrollView style={styles.exercisesScrollView}>
-          {exercises.length === 1 
-            ? <Text style={styles.noExercisesText}>
+          {workoutExercises
+            ? Object.keys(workoutExercises).map((exerciseKey) => (
+                <ExerciseView
+                  key={exerciseKey}
+                  exerciseKey={exerciseKey}
+                  programKey={programKey}
+                  workoutKey={workoutKey}
+                  onClick={showTrackExerciseModal}
+                  exerciseName={workoutExercises[exerciseKey].exerciseName}
+                  setsList={workoutExercises[exerciseKey].sets}
+                  editMode={editMode}
+                  clickDelete={showAreYoSureModal}
+                />
+              ))
+            : <Text style={styles.noExercisesText}>
                 You have not created exercises yet. Get started 
                 by clicking the "Add exercise" button below!
               </Text>
-            : exercises.slice(0, -1).map((exercise, index) => (
-                <ExerciseView
-                  key={index}
-                  onClick={showTrackExerciseModal}
-                  exerciseName={exercise.exerciseName}
-                  setsList={exercise.sets}
-                  editMode={editMode}
-                  clickDelete={showAreYoSureModal}
-                  exerciseKey={exerciseKeys[index]}
-                />
-              )
-          )}
+          }
         </ScrollView>
       </View>
       <TextAndIconButton 
