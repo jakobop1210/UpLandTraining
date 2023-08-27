@@ -1,0 +1,124 @@
+{
+  "exercises": {
+    "chest": [
+      "BB flat bench press",
+      "BB incline bench press",
+      "Flat DB press",
+      "Incline DB press",
+      "Smith machine flat press",
+      "Smith machine incline press",
+      "Machine flat chest press",
+      "Machine incline chest press",
+      "Machine decline chest press",
+      "Chest dips",
+      "Chest dips machine",
+      "Pec dec flyes",
+      "DB incline flyes",
+      "DB flat flyes",
+      "DB decline flyes",
+      "Seated cable flyes",
+      "Incline cable flyes",
+      "Standing decline cable flyes",
+      "Standing cable flyes",
+      "Seated cable press",
+      "Incline cable press",
+      "Standing cable press",
+      "Pushups",
+      "Incline pushups",
+      "Decline pushups"
+    ],
+    "shoulders": [
+      "BB military press",
+      "DB military press",
+      "Seated DB press",
+      "Seated DB press netural grip",
+      "Seated DB lateral raises",
+      "Standing DB lateral raises",
+      "DB front raises",
+      "DB rear delt flyes",
+      "DB upright rows",
+      "BB upright rows",
+      "BB front raises",
+      "Lying cable lateral raises",
+      "Standing cable lateral raises",
+      "One arm cable lateral raises",
+      "Cable front raises",
+      "Cable rear delt flyes",
+      "Cable upright rows",
+      "Cable front raises",
+      "Machine lateral raises",
+      "Machine front raises",
+      "Machine rear delt flyes",
+      "Machine front raises",
+      "Standing Arnold press",
+      "Seated Arnold press"
+    ],
+    "triceps": [
+      "Ez bar flat skullcrushers",
+      "Ez bar incline skullcrushers",
+      "DB flat skullcrushers",
+      "DB incline skullcrushers",
+      "One arm DB skullcrushers",
+      "JM smith machine press",
+      "JM BB press",
+      "JM DB press",
+      "Triceps dips",
+      "Triceps pushups",
+      "One arm cable extension",
+      "One arm overhead cable extension",
+      "Cable crossover extension",
+      "Cable crossover overhead extension",
+      "Rope triceps extension",
+      "Rope triceps overhead extension",
+      "Rope triceps pushdowns",
+      "Cable triceps bar pushdowns",
+      "Triceps dips machine"
+    ],
+    "back": [
+      "Pull-Ups pronated grip",
+      "Pull-Ups supinated grip",
+      "Pull-Ups neutral grip",
+      "Lat Pulldowns pronated grip",
+      "Lat Pulldowns supinated grip",
+      "Lat Pulldowns neutral grip",
+      "Lat Pulldowns close grip",
+      "Bent-Over BB Rows pronated grip",
+      "Bent-Over BB Rows supinated grip",
+      "T-Bar Rows pronated grip",
+      "T-Bar Rows neutral grip",
+      "Seated Cable Rows pronated grip",
+      "Seated Cable Rows supinated grip",
+      "Seated Cable Rows neutral grip",
+      "One-Arm Dumbbell Rows",
+      "Lying DB upper back row",
+      "Lying DB mid back row",
+      "Machine upper back rows",
+      "Machine mid back row",
+      "Deadlifts",
+      "Rack Pulls",
+      "Hyperextensions",
+      "Meadows Rows",
+      "Pullover Machine",
+      "Cable Rope Pullovers",
+      "Chest-Supported T-bar Rows"
+    ],  
+    "biceps": {
+
+    },
+    "quads": {
+
+    },
+    "hamstrings": {
+
+    },
+    "calves": {
+
+    },
+    "glutes": {
+
+    },
+    "abs": {
+
+    }
+  }
+}
