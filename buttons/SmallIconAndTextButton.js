@@ -15,8 +15,8 @@ export default function TextAndIconButton({ onClick, title, iconName, iconSize }
       styles.button
     ]}>
       <View style={styles.contentContainer}>
-        <Text style={styles.buttonText}>{title}</Text>
         <MaterialIcons name={iconName} size={iconSize} color="#F0EBD8" />
+        <Text style={styles.buttonText}>{title}</Text>
       </View>
     </Pressable>
   );
@@ -26,9 +26,8 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: "center",
     alignItems: "center",
-    height: 50,
-    paddingLeft: 20,
-    paddingRight: 20,
+    padding: 5,
+    paddingLeft: 10,
   },
   contentContainer: {
     flexDirection: 'row',
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#F0EBD8',
-    fontSize: 18,
-    marginRight: 5
+    fontSize: 15,
+    marginLeft: 2
   },
 });

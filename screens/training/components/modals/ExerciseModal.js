@@ -92,7 +92,7 @@ export default function ExerciseModal(props) {
               <DynamicInput
                 labelText="Set"
                 placeholderText="reps"
-                onClickCreate={props.showCreateExercise ? addExercise : trackExercise}
+                onClickCreate={trackExercise}
                 showWeightInput={true}
                 buttonText={props.buttonText}
                 inputLength={props.setsList.length}
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   contentView: {
     flexDirection: "column",
     alignItems: "center",
-    height: 520,
+    height: 500,
     width: 320,
     backgroundColor: "#1D2D44",
     padding: 20,

@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
   exercisesScrollView: {
     flex: 1,
     flexDirection: "column",
+    width: '90%',
   },
   noExercisesText: {
     color: "#666666",

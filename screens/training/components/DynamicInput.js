@@ -90,9 +90,9 @@ export default function DynamicInput(props) {
               />
               {props.showWeightInput && (
                 <TextInput
-                  style={[styles.input, props.showWeightInput ? { width: '45%' } : {}]}
+                  style={[styles.input, props.showWeightInput ? { width: '43%' } : {}]}
                   onChangeText={(weight) => handleWeightChange(field.id, weight)}
-                  placeholder="Weight in kg"
+                  placeholder="weight (kg)"
                   placeholderTextColor="#888"
                   maxLength={10}
                 />

@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import IconButton from '../../../buttons/IconButton';
 import { useEffect } from 'react';
+import {  MaterialIcons } from '@expo/vector-icons'; 
 
 // Components
-
+import SmallIconAndTextButton from '../../../buttons/SmallIconAndTextButton';
 
 export default function ExerciseView({ exerciseName, onClick, setsList, exerciseKey, editMode, clickDelete }) {
   
@@ -15,6 +16,10 @@ export default function ExerciseView({ exerciseName, onClick, setsList, exercise
   // Show tack exercise modal with the chosen name and sets
   function trackExercice() {
     onClick(exerciseName, setsList)
+  }
+
+  function showExerciseHistory() {
+    console.log("Show exercise history");
   }
   
   return (
@@ -35,18 +40,31 @@ export default function ExerciseView({ exerciseName, onClick, setsList, exercise
               onClick={deleteWorkoutWithKey}
               iconName="delete-outline"
               iconType="MaterialIcons"
-              iconSize={30}
+              iconSize={28}
               iconColor="#F0EBD8"
             />
           </View>
         }
         <Text style={styles.exerciseName}>{exerciseName}</Text>
-        <View style={styles.setsListView}>
-          <Text style={styles.setText}>{setsList.length} total set:  </Text>
+        <View style={styles.listView}>
+          <MaterialIcons
+            name="timer" 
+            size={18} color="#F0EBD8" 
+            style={{ marginRight: 2 }}
+          />
+          <Text style={styles.exerciseInfoText}>Rest: 3min</Text>
+          <SmallIconAndTextButton
+            title="History"
+            onClick={showExerciseHistory}
+            iconName="history"
+            iconSize={19}
+          />
+        </View>
+        <View style={styles.listView}>
           {setsList.map((set, index) => (
-            <Text key={index} style={styles.setText}>
-              {index != setsList.length-1 ? `${set}reps, ` : `${set}reps`}
-            </Text>
+            <View key={index} style={styles.setView}>
+              <Text style={styles.exerciseInfoText}>{set}reps</Text>
+            </View>
           ))}
         </View>
       </View>
@@ -57,18 +75,16 @@ export default function ExerciseView({ exerciseName, onClick, setsList, exercise
 const styles = StyleSheet.create({
   exerciseDescriptionView: {
     position: "relative",
-    width: 360,
+    width: "100%",
     backgroundColor: "#3E5C76",
-    minHeight: 75,
-    borderRadius: 10,
+    borderRadius: 8,
     paddingTop: 10,
-    paddingLeft: 10,
+    paddingLeft: 20,
     marginTop: 15
   },
   exerciseName: {
     color: "#F0EBD8",
-    fontSize: 20,
-    fontWeight: "500",
+    fontSize: 25,
     marginBottom: 8,
     width: "90%"
   },
@@ -78,13 +94,32 @@ const styles = StyleSheet.create({
     right: 5,
     zIndex: 1000
   }, 
-  setsListView: {
+  listView: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginBottom: 10
+    marginBottom: 10,
+    alignItems: "center"
   },
-  setText: {
-    color: "#DDD",
+  setView: {
+    borderColor: "#748CAB",
+    borderWidth: 1,
+    borderRadius: 40,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    marginRight: 5,
+    marginTop: 5,
+    justifyContent: "center",
+  },
+  trackWeightView: {
+    flexDirection: "row",
+    position: "absolute",
+    alignItems: "center",
+    right: 0,
+    top: 5,
+    padding: 10,
+  },
+  exerciseInfoText: {
+    color: "#F0EBD8",
     fontSize: 15,
   }
 });

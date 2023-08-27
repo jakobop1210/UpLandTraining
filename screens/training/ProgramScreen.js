@@ -6,7 +6,7 @@ import { getAuth } from 'firebase/auth';
 
 // Components
 import Header from '../../Header';
-import WorkoutView from './components/WorkoutView';
+import ItemView from './components/ItemView';
 import AreYouSureModal from './components/modals/AreYouSureModal';
 import TextAndIconButton from '../../buttons/TextAndIconButton';
 import CreateWorkoutModal from './components/modals/CreateWorkoutModal';
@@ -96,14 +96,14 @@ export default function ProgramScreen({ route }) {
         <ScrollView style={styles.workoutsScrollView}>
           {programWorkouts
             ? Object.keys(programWorkouts).map((workoutKey) => (
-                <WorkoutView
+                <ItemView
                   key={workoutKey}
-                  workoutKey={workoutKey}
                   programKey={programKey}
-                  workoutName={programWorkouts[workoutKey].workoutName}
+                  workoutKey={workoutKey}
+                  itemName={programWorkouts[workoutKey].workoutName}
                   exercises={programWorkouts[workoutKey].exercises}
-                  clickDelete={showAreYouSureModal}
                   editMode={editMode}
+                  clickDelete={showAreYouSureModal}
                 />
              ))
             : <Text style={styles.noWorkoutsText}>

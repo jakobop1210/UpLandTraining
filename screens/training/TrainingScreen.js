@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 // Components
 import Header from '../../Header';
-import ProgramView from './components/ProgramView';
+import ItemView from './components/ItemView';
 import TextAndIconButton from '../../buttons/TextAndIconButton';
 import AreYouSureModal from './components/modals/AreYouSureModal';
 
@@ -81,14 +81,15 @@ export default function TrainingScreen() {
         <ScrollView style={styles.programsScrollView}>
           {userPrograms 
             ? Object.keys(userPrograms).map((programKey) => (
-                <ProgramView
+                <ItemView
                   key={programKey}
                   programKey={programKey}
-                  programName={userPrograms[programKey].programName}
-                  description={userPrograms[programKey].programDescription}
+                  itemName={userPrograms[programKey].programName}
                   editMode={editMode}
                   clickDelete={showModal}
                   updateEditMode={updateEditMode}
+                  exercises={userPrograms[programKey].workouts}
+                  isProgram={true}
                 />
               ))
             : <Text style={styles.noProgramText}>
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   programsScrollView: {
+    width: "90%",
     flex: 1,
     flexDirection: "column",
   },
