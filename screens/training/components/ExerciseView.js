@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   exerciseName: {
     color: "#F0EBD8",
-    fontSize: 25,
+    fontSize: 22,
     marginBottom: 8,
     width: "90%"
   },

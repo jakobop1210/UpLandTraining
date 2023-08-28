@@ -1,14 +1,33 @@
-import { StyleSheet, Modal, View, Text, Dimensions, TextInput } from 'react-native';
-import { useState } from 'react';
-import { getDatabase, ref, set, push } from 'firebase/database';
+import { StyleSheet, Modal, View, Text, Dimensions } from 'react-native';
+import { useState, useEffect } from 'react';
+import { getDatabase, ref, set, push, onValue } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 
 // Components
 import DynamicInput from '../DynamicInput';
 import IconButton from '../../../../buttons/IconButton';
+import DropdownComponent from '../DropdownComponent';
 
 export default function ExerciseModal(props) {
   const [newExerciseName, setNewExerciseName] = useState('');
+  const [exerciseNames, setExerciseNames] = useState([]);
+  const [filteredExerciseNames, setFilteredExerciseNames] = useState([]);
+  const [chosenMuscleGroup, setChosenMuscleGroup] = useState('chest'); // Default muscle group
+
+  // Fetch all exercises from database
+  useEffect(() => {
+    const db = getDatabase();
+    const exerciseNamesRef = ref(db, "exercises/" + chosenMuscleGroup);
+
+    // Listen for changes to the exercise names
+    onValue(exerciseNamesRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const names = Object.values(data);
+        setExerciseNames(names);
+      }
+    });
+  }, []); // Run once when the component mounts
 
 
   // Add exercise to database to workouts/programkey/workoutkey
@@ -43,13 +62,12 @@ export default function ExerciseModal(props) {
     const db = getDatabase();
     const currentUser = getAuth().currentUser;
     const date = new Date();
-    const modifiedExerciseName = props.exerciseName.toLowerCase().replace(/\s/g, '');
     const sets = repsList.map((reps, index) => ({
       weight: weightList[index],
       reps: reps,
     }));
 
-    set(ref(db, `users/${currentUser.uid}/exerciseHistory/${modifiedExerciseName}/${date}`), {
+    set(ref(db, `users/${currentUser.uid}/exerciseHistory/${props.exerciseName}/${date}`), {
       sets: sets
     });
     alert(`Exercise "${props.exerciseName}" tracked`);
@@ -71,15 +89,8 @@ export default function ExerciseModal(props) {
           </View>
           {props.showCreateExercise
             ? <>
-              <TextInput
-                autoCapitalize="none"
-                placeholder="Exercise name"
-                placeholderTextColor="#888"
-                onChangeText={setNewExerciseName}
-                value={newExerciseName}
-                style={styles.exerciseNameInput}
-                maxLength={35}
-              />
+              <DropdownComponent />
+              <DropdownComponent />
               <DynamicInput
                 labelText="Set"
                 placeholderText="reps"
