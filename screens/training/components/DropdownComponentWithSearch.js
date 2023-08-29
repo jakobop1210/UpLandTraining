@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const data = [
   { label: 'Chest', value: 'chest' },
@@ -16,7 +16,7 @@ const data = [
   { label: 'Abs', value: 'abs' },
 ];
 
-const DropdownComponent = () => {
+export default function DropdownComponentWithSearch() {
   const [value, setValue] = useState(null);
 
   return (
@@ -27,31 +27,33 @@ const DropdownComponent = () => {
       itemTextStyle={{ color: '#F0EBD8' }}
       containerStyle={styles.containerStyle}
       itemContainerStyle={{ backgroundColor: '#1D2D44' }}
+      inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
       activeColor='#748CAB'
       autoScroll={false}
+      search
+      searchPlaceholder="Search for exercise..."
       data={data}
       iconColor='#F0EBD8'
       maxHeight={250}
       labelField="label"
       valueField="value"
-      placeholder="Select muscle group"
+      placeholder="Select exercise"
       value={value}
       onChange={item => {
         setValue(item.value);
       }}
       renderLeftIcon={() => (
-        <MaterialCommunityIcons style={styles.icon} name="arm-flex" color="#F0EBD8" size={22} />
+        <FontAwesome5 style={styles.icon} name="dumbbell" color="#F0EBD8" size={18} />
       )}
     />
   );
 };
 
-export default DropdownComponent;
 
 const styles = StyleSheet.create({
   dropdown: {
-    width: "85%",
+    width: "90%",
     margin: 16,
     height: 55,
     color: '#F0EBD8',
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   icon: {
-    marginRight: 10,
+    marginRight: 12,
     marginLeft: 5,
   },
   placeholderStyle: {
@@ -73,5 +75,10 @@ const styles = StyleSheet.create({
   selectedTextStyle: {
     fontSize: 18,
     color: '#F0EBD8',
+  },
+  inputSearchStyle: {
+    height: 50,
+    fontSize: 16,
+    borderRadius: 5,
   },
 });

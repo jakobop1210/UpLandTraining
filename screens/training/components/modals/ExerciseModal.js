@@ -7,11 +7,11 @@ import { getAuth } from 'firebase/auth';
 import DynamicInput from '../DynamicInput';
 import IconButton from '../../../../buttons/IconButton';
 import DropdownComponent from '../DropdownComponent';
+import DropdownComponentWithSearch from '../DropdownComponentWithSearch';
 
 export default function ExerciseModal(props) {
   const [newExerciseName, setNewExerciseName] = useState('');
   const [exerciseNames, setExerciseNames] = useState([]);
-  const [filteredExerciseNames, setFilteredExerciseNames] = useState([]);
   const [chosenMuscleGroup, setChosenMuscleGroup] = useState('chest'); // Default muscle group
 
   // Fetch all exercises from database
@@ -90,7 +90,7 @@ export default function ExerciseModal(props) {
           {props.showCreateExercise
             ? <>
               <DropdownComponent />
-              <DropdownComponent />
+              <DropdownComponentWithSearch />
               <DynamicInput
                 labelText="Set"
                 placeholderText="reps"
