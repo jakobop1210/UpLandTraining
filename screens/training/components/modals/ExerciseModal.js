@@ -1,34 +1,19 @@
 import { StyleSheet, Modal, View, Text, Dimensions } from 'react-native';
-import { useState, useEffect } from 'react';
-import { getDatabase, ref, set, push, onValue } from 'firebase/database';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { useState } from 'react';
+import { getDatabase, ref, set, push } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 
 // Components
 import DynamicInput from '../DynamicInput';
 import IconButton from '../../../../buttons/IconButton';
 import DropdownComponent from '../DropdownComponent';
-import DropdownComponentWithSearch from '../DropdownComponentWithSearch';
+import ChooseRestTime from './ChooseRestTime';
 
 export default function ExerciseModal(props) {
   const [newExerciseName, setNewExerciseName] = useState('');
-  const [exerciseNames, setExerciseNames] = useState([]);
+  const [chosenRestTime, setChosenRestTime] = useState('');
   const [chosenMuscleGroup, setChosenMuscleGroup] = useState('chest'); // Default muscle group
-
-  // Fetch all exercises from database
-  useEffect(() => {
-    const db = getDatabase();
-    const exerciseNamesRef = ref(db, "exercises/" + chosenMuscleGroup);
-
-    // Listen for changes to the exercise names
-    onValue(exerciseNamesRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const names = Object.values(data);
-        setExerciseNames(names);
-      }
-    });
-  }, []); // Run once when the component mounts
-
 
   // Add exercise to database to workouts/programkey/workoutkey
   function addExercise(repsList) {
@@ -89,8 +74,9 @@ export default function ExerciseModal(props) {
           </View>
           {props.showCreateExercise
             ? <>
-              <DropdownComponent />
-              <DropdownComponentWithSearch />
+              <DropdownComponent search={false} placeholder="Select Muscle Group" onUpdate={setChosenMuscleGroup} iconName="arm-flex"/>
+              <DropdownComponent search={true} placeholder="Select Exercise" chosenMuscleGroup={chosenMuscleGroup} onUpdate={setNewExerciseName} iconName="dumbbell"/>
+              <ChooseRestTime />
               <DynamicInput
                 labelText="Set"
                 placeholderText="reps"
@@ -135,8 +121,8 @@ const styles = StyleSheet.create({
   contentView: {
     flexDirection: "column",
     alignItems: "center",
-    height: 500,
-    width: 320,
+    height: 640,
+    width: 340,
     backgroundColor: "#1D2D44",
     padding: 20,
     borderRadius: 20,

@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   scrollViewContainer: {
-    height: 270,
+    height: 220,
     marginBottom: 20,
   },
   inputContainer: {
