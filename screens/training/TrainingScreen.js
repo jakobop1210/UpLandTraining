@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   programsView: {
-    height: 560,
+    height: 580,
     width: "100%",
     alignItems: "center",
     marginBottom: 10

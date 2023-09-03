@@ -44,16 +44,16 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#F0EBD8",
-    fontSize: 25,
+    fontSize: 28,
   },
   editButtonView: {
     position: "absolute",
-    bottom: 0,
-    right: 25,
+    bottom: 2,
+    right: 20,
   },
   goBackButtonView: {
     position: "absolute",
     bottom: -8,
-    left: 0,
+    left: 5,
   }
 });

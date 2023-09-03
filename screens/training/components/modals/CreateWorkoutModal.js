@@ -4,7 +4,7 @@ import { getDatabase, ref, push } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 
 // Components
-import PurpleFadedButton from '../../../../buttons/PurpleFadedButton';
+import TextAndIconButton from '../../../../buttons/TextAndIconButton';
 import IconButton from '../../../../buttons/IconButton';
 
 export default function CreateWorkoutModal({ exitModal, programKey }) {
@@ -48,13 +48,11 @@ export default function CreateWorkoutModal({ exitModal, programKey }) {
             style={styles.workoutNameInput}
             maxLength={25}
           />
-          <PurpleFadedButton
+          <TextAndIconButton
             title="Create Workout"
+            iconName="create"
+            iconSize={22}
             onClick={addWorkout}
-            buttonWidth="60%"
-            buttonHeight={50}
-            startGradient={[0, 0]}
-            endGradient={[1, 0]}
           />
         </View>
       </View>
@@ -81,10 +79,11 @@ const styles = StyleSheet.create({
   contentView: {
     flexDirection: "column",
     alignItems: "center",
-    height: 200,
-    width: 320,
+    justifyContent: "space-between",
+    height: 250,
+    width: 300,
     backgroundColor: "#1D2D44",
-    padding: 20,
+    padding: 30,
     borderRadius: 20,
     zIndex: 1000,
     shadowColor: "#000",
@@ -108,8 +107,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginRight: 10,
     marginBottom: 50,
-    paddingHorizontal: 10,
-    borderBottomColor: "#CCC",
+    paddingHorizontal: 25,
+    borderBottomColor: "#CCCCCC",
     borderBottomWidth: 1
   }
 });

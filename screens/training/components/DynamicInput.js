@@ -76,7 +76,7 @@ export default function DynamicInput(props) {
         <TextAndIconButton onClick={addInput} iconName="add" title="Add" iconSize={25} />
         <TextAndIconButton onClick={removeInput} title="Remove" iconName="remove" iconSize={25} />
       </View>
-      <View style={styles.scrollViewContainer}>
+      <View style={[styles.scrollViewContainer, { maxHeight: props.maxHeight }]}>
         <ScrollView>
           {inputFields.map((field) => (
             <View key={field.id} style={styles.inputContainer}>
@@ -90,7 +90,7 @@ export default function DynamicInput(props) {
               />
               {props.showWeightInput && (
                 <TextInput
-                  style={[styles.input, props.showWeightInput ? { width: '43%' } : {}]}
+                  style={[styles.input, props.showWeightInput ? { width: '41%' } : {}]}
                   onChangeText={(weight) => handleWeightChange(field.id, weight)}
                   placeholder="weight (kg)"
                   placeholderTextColor="#888"
@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   scrollViewContainer: {
-    height: 220,
     marginBottom: 20,
   },
   inputContainer: {

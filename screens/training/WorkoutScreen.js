@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   exercisesView: {
-    height: 560,
+    height: 590,
     width: "100%",
     alignItems: "center",
     marginBottom: 10

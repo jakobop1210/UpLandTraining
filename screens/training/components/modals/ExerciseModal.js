@@ -1,5 +1,4 @@
 import { StyleSheet, Modal, View, Text, Dimensions } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState } from 'react';
 import { getDatabase, ref, set, push } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
@@ -77,14 +76,33 @@ export default function ExerciseModal(props) {
           </View>
           {props.showCreateExercise
             ? <>
-              <DropdownComponent search={false} placeholder="Select Muscle Group" onUpdate={setChosenMuscleGroup} iconName="arm-flex"/>
-              <DropdownComponent search={true} placeholder="Select Exercise" chosenMuscleGroup={chosenMuscleGroup} onUpdate={setNewExerciseName} iconName="dumbbell"/>
-              <DropdownComponent search={false} placeholder="Select Rest time" chosenMuscleGroup={chosenMuscleGroup} onUpdate={setChosenRestTime} iconName="timer"/>
+              <Text style={styles.exerciseNameText}>Add exercise</Text>
+              <DropdownComponent 
+                search={false} 
+                placeholder="Select Muscle Group" 
+                onUpdate={setChosenMuscleGroup} 
+                iconName="arm-flex"
+              />
+              <DropdownComponent 
+                search={true} 
+                placeholder="Select Exercise" 
+                chosenMuscleGroup={chosenMuscleGroup} 
+                onUpdate={setNewExerciseName} 
+                iconName="dumbbell"
+              />
+              <DropdownComponent 
+                search={false} 
+                placeholder="Select Rest Time" 
+                chosenMuscleGroup={chosenMuscleGroup} 
+                onUpdate={setChosenRestTime} 
+                iconName="timer"
+              />
               <DynamicInput
                 labelText="Set"
                 placeholderText="reps"
                 onClickCreate={addExercise}
                 buttonText={props.buttonText}
+                maxHeight={200}
               />
               </>
             : <>
@@ -96,6 +114,7 @@ export default function ExerciseModal(props) {
                 showWeightInput={true}
                 buttonText={props.buttonText}
                 inputLength={props.setsList.length}
+                maxHeight={270}
               />
               </>
           }
@@ -124,10 +143,10 @@ const styles = StyleSheet.create({
   contentView: {
     flexDirection: "column",
     alignItems: "center",
-    height: 640,
     width: 340,
     backgroundColor: "#1D2D44",
-    padding: 20,
+    paddingTop: 30,
+    paddingBottom: 20,
     borderRadius: 20,
     zIndex: 1000,
     shadowColor: "#000",
@@ -141,8 +160,8 @@ const styles = StyleSheet.create({
   },
   exitButtonView: {
     position: "absolute",
-    top: 5,
-    right: 10
+    top: 3,
+    right: 5
   },
   exerciseNameInput: {
     height: 45,
@@ -158,6 +177,6 @@ const styles = StyleSheet.create({
   exerciseNameText: {
     color: "#F0EBD8",
     fontSize: 25,
-    marginBottom: 30
-  }
+    marginBottom: 15
+  },
 });

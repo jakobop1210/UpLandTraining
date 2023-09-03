@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#3E5C76',
     borderRadius: 8,
-    padding: 15,
+    padding: 25,
     marginTop: 15,
   },
   itemName: {
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   deleteButtonView: {
     position: 'absolute',
-    top: 35,
+    top: 45,
     right: 15,
   },
 });

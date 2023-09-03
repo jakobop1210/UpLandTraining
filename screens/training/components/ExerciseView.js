@@ -2,11 +2,13 @@ import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import IconButton from '../../../buttons/IconButton';
 import { useEffect } from 'react';
 import {  MaterialIcons } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/native';
 
 // Components
 import SmallIconAndTextButton from '../../../buttons/SmallIconAndTextButton';
 
 export default function ExerciseView({ exerciseName, restTime, onClick, setsList, exerciseKey, editMode, clickDelete }) {
+  const navigation = useNavigation();
   
   // Delete workout with the chosen key
   function deleteWorkoutWithKey() {
@@ -19,7 +21,9 @@ export default function ExerciseView({ exerciseName, restTime, onClick, setsList
   }
 
   function showExerciseHistory() {
-    console.log("Show exercise history");
+    navigation.navigate("ExerciseHistory", {
+      exerciseName: exerciseName
+    })
   }
   
   return (

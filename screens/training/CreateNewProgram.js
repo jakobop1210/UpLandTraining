@@ -83,6 +83,7 @@ export default function CreateProgramScreen() {
           placeholderText="Workout name"
           onClickCreate={createProgram}
           buttonText="Create program"
+          maxHeight={300}
         />
       </View>
     </LinearGradient>

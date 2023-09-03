@@ -59,6 +59,7 @@ export default function ProgramScreen({ route }) {
         programKey={programKey}
       />
     );
+    setEditMode(false);
   }
 
   // Show the modal for confirming workout deletion
@@ -101,6 +102,7 @@ export default function ProgramScreen({ route }) {
                   programKey={programKey}
                   workoutKey={workoutKey}
                   itemName={programWorkouts[workoutKey].workoutName}
+                  updateEditMode={updateEditMode}
                   exercises={programWorkouts[workoutKey].exercises}
                   editMode={editMode}
                   clickDelete={showAreYouSureModal}
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   workoutsView: {
-    height: 560,
+    height: 580,
     width: "100%",
     alignItems: "center",
     marginBottom: 10
