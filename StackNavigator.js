@@ -14,7 +14,7 @@ export default function StackNavigator() {
     <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarStyle: {backgroundColor: "#1D2D44", height: 90, borderTopWidth:0},
+          tabBarStyle: {backgroundColor: "#1D2D44", height: 90, borderTopWidth:0, paddingTop: 10},
           tabBarLabelStyle: {fontSize: 12, fontWeight: "bold"},
           tabBarInactiveTintColor: "#748CAB",
           tabBarActiveTintColor: "#F0EBD8",

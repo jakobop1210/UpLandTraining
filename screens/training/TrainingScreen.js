@@ -101,7 +101,7 @@ export default function TrainingScreen() {
       </View>
       <TextAndIconButton 
         onClick={goToCreateNewProgram} 
-        title="Create new Program" 
+        title="Create New Program" 
         iconName="add"
         iconSize={25}
       />
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   programsView: {
-    height: 580,
+    height: "73%",
     width: "100%",
     alignItems: "center",
     marginBottom: 10

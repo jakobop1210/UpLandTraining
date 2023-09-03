@@ -117,7 +117,7 @@ export default function ProgramScreen({ route }) {
       </View>
       <TextAndIconButton 
         onClick={showCreateNewWorkoutModal} 
-        title="Create new Workout"
+        title="Create New Workout"
         iconName="add"
         iconSize={25}
       />
@@ -135,10 +135,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   workoutsView: {
-    height: 580,
+    height: "73%",
     width: "100%",
     alignItems: "center",
-    marginBottom: 10
+    marginBottom: 10,
   },
   workoutsScrollView: {
     flex: 1,
