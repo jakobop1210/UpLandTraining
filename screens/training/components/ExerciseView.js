@@ -6,7 +6,7 @@ import {  MaterialIcons } from '@expo/vector-icons';
 // Components
 import SmallIconAndTextButton from '../../../buttons/SmallIconAndTextButton';
 
-export default function ExerciseView({ exerciseName, onClick, setsList, exerciseKey, editMode, clickDelete }) {
+export default function ExerciseView({ exerciseName, restTime, onClick, setsList, exerciseKey, editMode, clickDelete }) {
   
   // Delete workout with the chosen key
   function deleteWorkoutWithKey() {
@@ -52,7 +52,7 @@ export default function ExerciseView({ exerciseName, onClick, setsList, exercise
             size={18} color="#F0EBD8" 
             style={{ marginRight: 2 }}
           />
-          <Text style={styles.exerciseInfoText}>Rest: 3min</Text>
+          <Text style={styles.exerciseInfoText}>Rest: {restTime}</Text>
           <SmallIconAndTextButton
             title="History"
             onClick={showExerciseHistory}

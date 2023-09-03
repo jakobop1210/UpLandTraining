@@ -8,7 +8,6 @@ import { getAuth } from 'firebase/auth';
 import DynamicInput from '../DynamicInput';
 import IconButton from '../../../../buttons/IconButton';
 import DropdownComponent from '../DropdownComponent';
-import ChooseRestTime from './ChooseRestTime';
 
 export default function ExerciseModal(props) {
   const [newExerciseName, setNewExerciseName] = useState('');
@@ -18,9 +17,12 @@ export default function ExerciseModal(props) {
   // Add exercise to database to workouts/programkey/workoutkey
   function addExercise(repsList) {
     if (newExerciseName === '') {
-      alert("Program name cannot be empty");
+      alert("Most choose an exercise");
       return;
-    } else if (repsList.includes('')) {
+    } else if (chosenRestTime === '') {
+      alert("Must choose a rest time");
+      return;
+    }else if (repsList.includes('')) {
       alert("Every set must have a rep count");
       return;
     }
@@ -28,6 +30,7 @@ export default function ExerciseModal(props) {
     const currentUser = getAuth().currentUser;
     push(ref(db, `users/${currentUser.uid}/trainingPrograms/${props.programKey}/workouts/${props.workoutKey}/exercises`), {
       exerciseName: newExerciseName,
+      restTime: chosenRestTime,
       sets: repsList
     });
     alert(`Exercise "${newExerciseName}" created`);
@@ -76,7 +79,7 @@ export default function ExerciseModal(props) {
             ? <>
               <DropdownComponent search={false} placeholder="Select Muscle Group" onUpdate={setChosenMuscleGroup} iconName="arm-flex"/>
               <DropdownComponent search={true} placeholder="Select Exercise" chosenMuscleGroup={chosenMuscleGroup} onUpdate={setNewExerciseName} iconName="dumbbell"/>
-              <ChooseRestTime />
+              <DropdownComponent search={false} placeholder="Select Rest time" chosenMuscleGroup={chosenMuscleGroup} onUpdate={setChosenRestTime} iconName="timer"/>
               <DynamicInput
                 labelText="Set"
                 placeholderText="reps"

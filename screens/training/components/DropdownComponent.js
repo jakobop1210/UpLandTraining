@@ -7,19 +7,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const DropdownComponent = ({search, placeholder, chosenMuscleGroup, onUpdate, iconName}) => {
   const [value, setValue] = useState(null);
-  const [data, setData] =  useState([
-    { label: 'Chest', value: 'chest' },
-    { label: 'Shoulders', value: 'shoulders' },
-    { label: 'Triceps', value: 'triceps' },
-    { label: 'Back', value: 'back' },
-    { label: 'Biceps', value: 'biceps' },
-    { label: 'Quads', value: 'quads' },
-    { label: 'Hamstrings', value: 'hamstrings' },
-    { label: 'Glutes', value: 'glutes' },
-    { label: 'Calves', value: 'calves' },
-    { label: 'Abs', value: 'abs' },
-  ]);
-
+  const muscleGroups = ["Chest", "Back", "Shoulders", "Biceps", "Triceps", "Quads", "Hamstrings", "Glutes", "Calves", "Abs"]
+  const timeOptions = ["30s", "45s", "1min", "1min 45s", "1min 30s", "1min 45s",  "2min", "2min 30s", "3min", "3min 30s", "4min", "4min 30s", "5min"]
+  const [data, setData] =  useState([])
+    
   // Fetch all exercises from database
   useEffect(() => {
     const db = getDatabase();
@@ -28,11 +19,20 @@ const DropdownComponent = ({search, placeholder, chosenMuscleGroup, onUpdate, ic
     onValue(exerciseNamesRef, (snapshot) => {
       const data = snapshot.val();
       if (data && search) {
-        const transformedData = Object.keys(data).map((key) => ({
+        setData(Object.keys(data).map((key) => ({
           label: data[key],
           value: key,
-        }));
-        setData(transformedData);
+        })));
+      } else if (iconName==="timer") {
+        setData(timeOptions.map((timeOption) => ({
+          label: timeOption,
+          value: timeOption,
+        })));
+      } else {
+        setData(muscleGroups.map((muscleGroup) => ({
+          label: muscleGroup,
+          value: muscleGroup.toLowerCase(),
+        })));
       }
     });
   }, [chosenMuscleGroup]); 
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   containerStyle: {
     backgroundColor: '#1D2D44',
     borderWidth: 0,
+    height: 300,
   },
   icon: {
     marginRight: 10,

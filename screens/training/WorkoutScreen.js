@@ -12,7 +12,7 @@ import AreYouSureModal from './components/modals/AreYouSureModal';
 import TextAndIconButton from '../../buttons/TextAndIconButton';
 
 export default function ProgramScreen({ route }) {
-  const workoutName = route.params.workoutName;
+  const workoutName = route.params.name;
   const workoutKey = route.params.workoutKey;
   const programKey = route.params.programKey;
   const currentUser = getAuth().currentUser;
@@ -116,6 +116,7 @@ export default function ProgramScreen({ route }) {
                   workoutKey={workoutKey}
                   onClick={showTrackExerciseModal}
                   exerciseName={workoutExercises[exerciseKey].exerciseName}
+                  restTime={workoutExercises[exerciseKey].restTime}
                   setsList={workoutExercises[exerciseKey].sets}
                   editMode={editMode}
                   clickDelete={showAreYoSureModal}
