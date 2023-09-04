@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { getDatabase, ref, onValue, remove } from 'firebase/database';
@@ -6,12 +6,13 @@ import { getAuth } from 'firebase/auth';
 
 // Components
 import Header from '../../Header'
+import HistoryChart from './components/HistoryChart';
 
 export default function ExerciseHistoryScreen({ route }) {
   const exerciseName = route.params.exerciseName;
   const currentUser = getAuth().currentUser;
   const [exerciseHistory, setExerciseHistory] = useState({});
-  const [activeButton, setActiveButton] = useState('Show List');
+  
 
   // Fetch exercise history based on user uid and exercise name
   useEffect(() => {
@@ -53,29 +54,20 @@ export default function ExerciseHistoryScreen({ route }) {
   return (
     <LinearGradient colors={['#0D1321', '#1D2D44']} style={styles.container}>
       <Header title={exerciseName} showGoBackButton={true} showEditButton={true}/>
-      {Object.keys(sortDictByDate(exerciseHistory)).map((date) => (
-        <View key={date} style={styles.historyView}>
-          <Text style={styles.historyTextHeader}>{formatDate(date)}</Text>
-          {exerciseHistory[date].map((set, index) => (
-            <Text key={index} style={styles.historyText}>
-              {`Set ${index + 1}: ${set.reps}reps (${set.weight}kg)`}
-            </Text>
+      <HistoryChart exerciseHistory={exerciseHistory}/>
+      <View style={styles.historyView}>
+        <ScrollView style={styles.historyScrollView}>
+          {Object.keys(sortDictByDate(exerciseHistory)).map((date) => (
+            <View key={date} style={styles.historyDescriptionView}>
+              <Text style={styles.historyTextHeader}>{formatDate(date)}</Text>
+              {exerciseHistory[date].map((set, index) => (
+                <Text key={index} style={styles.historyText}>
+                  {`Set ${index + 1}: ${set.reps}reps (${set.weight}kg)`}
+                </Text>
+              ))}
+            </View>
           ))}
-        </View>
-      ))}
-      <View style={styles.buttonView}>
-        <TouchableOpacity
-          style={[styles.button, activeButton === 'Show List' ? { backgroundColor: '#3E5C76' } : {}]}
-          onPress={() => handleButtonClick('Show List')}
-        >
-          <Text style={styles.buttonText}>Show List</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, activeButton === 'Show Graph' ? { backgroundColor: '#3E5C76' } : {}]}
-          onPress={() => handleButtonClick('Show Graph')}
-        >
-          <Text style={styles.buttonText}>Show Graph</Text>
-        </TouchableOpacity>
+        </ScrollView>
       </View>
     </LinearGradient>
   )
@@ -88,9 +80,23 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   historyView: {
+    height: "73%",
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  historyScrollView: {
+    flex: 1,
+    width: '90%',
+    flexDirection: "column",
+  },
+  historyDescriptionView: {
     flexDirection: "column",
     margin: 20,
-    paddingLeft: 20,
+    padding: 20,
+    width: "90%",
+    backgroundColor: "#1D2D44",
+    borderRadius: 10,
   },
   historyTextHeader: {
     color: "#F0EBD8",
@@ -100,25 +106,5 @@ const styles = StyleSheet.create({
     color: "#F0EBD8",
     fontSize: 16,
     marginTop: 5,
-  },
-  buttonView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    position: 'absolute',
-    bottom: 0,
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-  },
-  button: {
-    flex: 1,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    marginHorizontal: 5,
-  },
-  buttonText: {
-    color: '#F0EBD8',
-    fontSize: 18,
   },
 });
