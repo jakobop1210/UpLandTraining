@@ -20,6 +20,7 @@ export default function ProgramScreen({ route }) {
   const [exerciseModal, setExerciseModal] = useState(null);
   const [areYouSureModal, setAreYouSureModal] = useState(null)
   const [editMode, setEditMode] = useState(false);
+  const test = 0;
 
 
   // Fetch exercises based on programKey and workoutKey
