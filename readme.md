@@ -1,5 +1,3 @@
-# TODO
+# Training app for tracking progress
 
-## Set editmode to false when clicking on a button or component
-
-## Remove done editing buttons
+Training app made with React native and Firebase. In progress...
